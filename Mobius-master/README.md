@@ -13,10 +13,3 @@ mosquitto_pub -h localhost -t /mytopic/1 -m "Hello MQTT test"
 <div align="center">
 <img src="https://user-images.githubusercontent.com/29790334/28245393-a1159d5e-6a40-11e7-8948-4262bf29c371.png" width="500"/>
 </div>
-
-## MySQL (flaskdb 추가)
-<img src="https://github.com/user-attachments/assets/49a2f024-1e4e-4b19-8579-2e65380fa9a7" width="200" height="200"/>
-<img src="https://github.com/user-attachments/assets/59ca51a8-9a2f-4707-9bef-42431265e9d4" width="250" height="200"/>
-
-## ERD
-<img src="https://github.com/user-attachments/assets/afd58f80-bf7b-4f7c-bb17-fde8eb431d20" width="1800" height="600"/>
