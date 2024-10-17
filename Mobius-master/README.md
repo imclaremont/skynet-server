@@ -1,4 +1,4 @@
-드론으로부터 오는 MAVLink 메시지를 json으로 파싱 + Flask 서버로 전송하는 코드는 기존 pxy_mqtt.js 파일에 작성
+드론으로부터 오는 MAVLink 메시지를 json으로 파싱 + Flask 서버로 전송하는 코드는 기존 pxy_mqtt.js 파일에 작성 예정
 
 
 
