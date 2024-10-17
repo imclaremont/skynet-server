@@ -1,4 +1,4 @@
-## flaskdb 추가
+## 기존 데이터베이스에 flaskdb 추가
 <img src="https://github.com/user-attachments/assets/49a2f024-1e4e-4b19-8579-2e65380fa9a7" width="200" height="200"/>
 <img src="https://github.com/user-attachments/assets/59ca51a8-9a2f-4707-9bef-42431265e9d4" width="250" height="200"/>
 
