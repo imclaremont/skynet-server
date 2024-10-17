@@ -1,1 +1,25 @@
-
+CREATE TABLE delivery_path_table (
+    delivery_id VARCHAR(36) NOT NULL COMMENT 'PK, FK',
+    path1_id VARCHAR(36) NOT NULL COMMENT 'FK',
+    path2_id VARCHAR(36) NOT NULL COMMENT 'FK',
+    path3_id VARCHAR(36) NOT NULL COMMENT 'FK',
+    path4_id VARCHAR(36) NOT NULL COMMENT 'FK',
+    path5_id VARCHAR(36) NOT NULL COMMENT 'FK',
+    path6_id VARCHAR(36) NOT NULL COMMENT 'FK',
+    path7_id VARCHAR(36) NOT NULL COMMENT 'FK',
+    path8_id VARCHAR(36) NOT NULL COMMENT 'FK',
+    path9_id VARCHAR(36) NOT NULL COMMENT 'FK',
+    path10_id VARCHAR(36) NOT NULL COMMENT 'FK',
+    PRIMARY KEY (delivery_id),
+    FOREIGN KEY (delivery_id) REFERENCES deliveries_table(delivery_id),
+    FOREIGN KEY (path1_id) REFERENCES path_between_station_table(path_id),
+    FOREIGN KEY (path2_id) REFERENCES path_between_station_table(path_id),
+    FOREIGN KEY (path3_id) REFERENCES path_between_station_table(path_id),
+    FOREIGN KEY (path4_id) REFERENCES path_between_station_table(path_id),
+    FOREIGN KEY (path5_id) REFERENCES path_between_station_table(path_id),
+    FOREIGN KEY (path6_id) REFERENCES path_between_station_table(path_id),
+    FOREIGN KEY (path7_id) REFERENCES path_between_station_table(path_id),
+    FOREIGN KEY (path8_id) REFERENCES path_between_station_table(path_id),
+    FOREIGN KEY (path9_id) REFERENCES path_between_station_table(path_id),
+    FOREIGN KEY (path10_id) REFERENCES path_between_station_table(path_id)
+);
