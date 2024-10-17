@@ -1,3 +1,5 @@
+※ MySQL은 Mobius-Broker 서버 안에 내장
+
 ## 기존 db에 'flaskdb'를 추가한 모습
 <img src="https://github.com/user-attachments/assets/49a2f024-1e4e-4b19-8579-2e65380fa9a7" width="200" height="200"/>
 
