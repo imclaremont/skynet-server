@@ -11,4 +11,4 @@ Mobius-Broker 서버 측) MAVLink 메시지(이진 형태) → json 파싱 필�
 
 Flask 서버 측) json → MAVLink 메시지(이진 형태) 파싱 필요
 
-<img src="https://github.com/user-attachments/assets/3b7c555c-82c0-497f-b261-5b07695e1f70" width="400" height="400"/>
+<img src="https://github.com/user-attachments/assets/3b7c555c-82c0-497f-b261-5b07695e1f70" width="800" height="400"/>
