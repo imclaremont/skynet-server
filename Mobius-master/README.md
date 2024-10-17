@@ -3,10 +3,10 @@
 1. pymavlink 라이브러리 사용 - MAVLink 메시지의 각 필드를 추출
 2. json 라이브러리 사용 - 추출한 필드를 JSON 형식으로 변환
 
-## MQTT 브로커(mosquitto) 구독 터미널 명령
+## MQTT 브로커(mosquitto 서버) 구독 터미널 명령
 mosquitto_sub -h localhost -t /mytopic/1
 
-## MQTT 브로커(mosquitto) 발행 터미널 명령
+## MQTT 브로커(mosquitto 서버) 발행 터미널 명령
 mosquitto_pub -h localhost -t /mytopic/1 -m "Hello MQTT test"
 
 ## Mobius-Broker SW Architecture
