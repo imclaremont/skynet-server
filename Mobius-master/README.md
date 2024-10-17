@@ -9,4 +9,4 @@
 <img src="https://github.com/user-attachments/assets/59ca51a8-9a2f-4707-9bef-42431265e9d4" width="200" height="200"/>
 
 ## ERD
-<img src="[https://github.com/user-attachments/assets/59ca51a8-9a2f-4707-9bef-42431265e9d4](https://github.com/user-attachments/assets/038e4ec2-239b-4aa5-b4bb-26b89c4853a9)" width="1000" height="600"/>
+<img src="https://github.com/user-attachments/assets/afd58f80-bf7b-4f7c-bb17-fde8eb431d20" width="1000" height="600"/>
