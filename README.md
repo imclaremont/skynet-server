@@ -7,8 +7,8 @@
 (위도와 경도 데이터는 따로 변수를 선언해 받은 다음, DB를 거치지 않고 실시간으로 직접 Flask 서버에 쏜다)
 
 
-Mobius-Broker 서버 측) MAVLink 메시지(이진 형태) → json 파싱 필요
+Mobius-Broker 서버 측: MAVLink 메시지(이진 형태) → json 파싱 필요
 
-Flask 서버 측) json → MAVLink 메시지(이진 형태) 파싱 필요
+Flask 서버 측: json → MAVLink 메시지(이진 형태) 파싱 필요
 
 <img src="https://github.com/user-attachments/assets/3b7c555c-82c0-497f-b261-5b07695e1f70" width="800" height="400"/>
