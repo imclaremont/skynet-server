@@ -11,5 +11,5 @@ SOURCE create_tables/path_between_station_table.sql;
 SOURCE create_tables/intersection_table.sql;
 SOURCE create_tables/delivery_path_table.sql;
 
--- 외래 키 설정
+-- 외래 키 체크 활성화(외래 키 무결성 제약 조건)
 SET FOREIGN_KEY_CHECKS = 1;
