@@ -40,6 +40,8 @@ CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 
 
 2. MAVLink 메시지를 json 데이터 형식으로 파싱하고, Flask 서버로 전송하는 로직 구현 (mqtt_message_handler 함수)
 
+※ mqtt.connect() 부분의 'mqtt://flask_server_ip'에는 실제 Flask 서버의 IP 주소를 입력
+
 ## MQTT 브로커(mosquitto 서버) 구독 테스트 터미널 명령
 mosquitto_sub -h localhost -t /mytopic/1
 
