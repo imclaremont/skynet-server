@@ -12,3 +12,6 @@ Mobius-Broker 서버 측: MAVLink 메시지(이진 형태) → json 파싱 필�
 Flask 서버 측: json → MAVLink 메시지(이진 형태) 파싱 필요
 
 <img src="https://github.com/user-attachments/assets/3b7c555c-82c0-497f-b261-5b07695e1f70" width="800" height="400"/>
+
+## SITL 연결
+SITL이 가상의 드론 데이터를 MAVLink 메시지 형태로 Mobius-Broker에 전송하게 되며, 이 과정에서 MQTT를 사용해 Mobius와 통신
