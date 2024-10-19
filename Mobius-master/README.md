@@ -12,12 +12,12 @@ app.put('/default', onem2mParser, (request, response) => {
 
 app.delete('/default', onem2mParser, (request, response) => {
 
-## pxy_ws.js
+## pxy_ws.js (WebSocket 프록시 파일)
 node mobius.js 로 서버 실행 시, "Target CSE(localhost) is not ready" 문구가 뜨는 문제 발생
 
 CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 처리로 해결
 
-## pxy_mqtt.js
+## pxy_mqtt.js (MQTT 프록시 파일)
 1. pxy_ws.js 내용과 동일 (CSE 비활성화)
 
 2. MAVLink 메시지를 json 데이터 형식으로 파싱
@@ -29,7 +29,7 @@ mqtt_message_handler() 함수 + mavlinkToJSON() 함수
 mqtt.connect() 부분의 'mqtt://flask_server_ip'에는 실제 Flask 서버의 IP 주소를 입력
 
 ## 사용 라이브러리 3가지
-1. mqtt 라이브러리: 발행(publish) 역할
+1. MQTT 라이브러리: 발행(publish) 역할
 
 설치 명령어) % npm install mqtt
 
