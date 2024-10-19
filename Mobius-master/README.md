@@ -33,10 +33,4 @@ mosquitto_sub -h localhost -t /mytopic/1
 ## MQTT 브로커(mosquitto 서버) 발행 테스트 터미널 명령
 mosquitto_pub -h localhost -t /mytopic/1 -m "Hello MQTT test"
 
-## Mobius-Broker SW Architecture
-<div align="center">
-<img src="https://user-images.githubusercontent.com/29790334/28245393-a1159d5e-6a40-11e7-8948-4262bf29c371.png" width="500"/>
-</div>
-
 ## SITL 연결
-------------
