@@ -40,10 +40,10 @@ import문) const { MAVLink } = require('mavlink');
 
 JavaScript 내장 라이브러리 (별도의 설치나 import 불필요)
 
-## ㅁMQTT 브로커(mosquitto 서버) 구독 테스트 터미널 명령
+## [MQTT 브로커(mosquitto 서버) 구독 테스트 터미널 명령]
 mosquitto_sub -h localhost -t /mytopic/1
 
-## ㅁMQTT 브로커(mosquitto 서버) 발행 테스트 터미널 명령
+## [MQTT 브로커(mosquitto 서버) 발행 테스트 터미널 명령]
 mosquitto_pub -h localhost -t /mytopic/1 -m "Hello MQTT test"
 
 ## SITL 연결 (w/한신님)
