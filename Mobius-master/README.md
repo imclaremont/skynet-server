@@ -18,7 +18,7 @@ app.put('/default', onem2mParser, (request, response) => {
 app.delete('/default', onem2mParser, (request, response) => {
 
 ## pxy_ws.js
-node mobius.js 로 서버 실행 시에 "Target CSE(localhost) is not ready" 가 뜨는 문제 발생
+node mobius.js 로 서버 실행 시, "Target CSE(localhost) is not ready" 문구가 뜨는 문제 발생
 
 CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 처리로 해결
 
