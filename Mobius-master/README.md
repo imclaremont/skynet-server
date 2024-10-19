@@ -1,3 +1,4 @@
+app.js 수정
 드론으로부터 오는 MAVLink 메시지를 json으로 파싱하고, Flask 서버로 전송하는 코드는 pxy_mqtt.js 파일에 작성 예정
 
 1. pymavlink 라이브러리 사용 - MAVLink 메시지의 각 필드를 추출
