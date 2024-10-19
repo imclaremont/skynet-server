@@ -16,3 +16,8 @@
 
 ## 전체 구조도 그림
 <img src="https://github.com/user-attachments/assets/3b7c555c-82c0-497f-b261-5b07695e1f70" width="800" height="400"/>
+
+## Mobius-Broker SW Architecture
+<div align="center">
+<img src="https://user-images.githubusercontent.com/29790334/28245393-a1159d5e-6a40-11e7-8948-4262bf29c371.png" width="500"/>
+</div>
