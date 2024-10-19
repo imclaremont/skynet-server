@@ -29,9 +29,11 @@ CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 
 #### 2-4. mission_item(현재 가고 있는 목표지점을 알 수 있는지 확인하는 용도)  
 
 ### 3. Flask 서버로 전송: mqtt.connect() 부분의 'mqtt://flask_server_ip'에는 실제 Flask 서버의 IP 주소를 입력
-### MQTT 라이브러리 - 발행(publish) 역할
-### pymavlink 라이브러리 - MAVLink 메시지의 각 필드를 추출
-### json 라이브러리 - 추출한 필드를 JSON 형식으로 변환
+
+### [pxy_mqtt.js 파일에서 사용하는 라이브러리 3가지]
+#### ① MQTT 라이브러리 - 발행(publish) 역할
+#### ② pymavlink 라이브러리 - MAVLink 메시지의 각 필드를 추출
+#### ③ json 라이브러리 - 추출한 필드를 JSON 형식으로 변환
 
 ## [MQTT 브로커(mosquitto 서버) 구독 테스트 터미널 명령]
 mosquitto_sub -h localhost -t /mytopic/1
