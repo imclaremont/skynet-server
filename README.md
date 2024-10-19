@@ -14,5 +14,5 @@
 1. 경로 계산 요청 처리: Flask 서버는 드론의 경로를 계산하는 로직을 처리하며, 필요한 데이터를 Mobius의 MySQL 데이터베이스에서 조회할 수 있다.
 2. json 데이터 수신 및 MAVLink 메시지로 파싱: 드론에게 데이터 전송 시 json 데이터를 MAVLink 메시지로 파싱한다.
 
-
+## 전체 구조도 그림
 <img src="https://github.com/user-attachments/assets/3b7c555c-82c0-497f-b261-5b07695e1f70" width="800" height="400"/>
