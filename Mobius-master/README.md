@@ -17,8 +17,6 @@ node mobius.js 로 서버 실행 시, "Target CSE(localhost) is not ready" 문�
 
 CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 처리로 해결
 
----------------------------------------------------
-
 # pxy_mqtt.js (MQTT 프록시 파일)
 ## 1. pxy_ws.js 내용과 동일 (CSE 비활성화)
 
@@ -47,8 +45,6 @@ import문: const { MAVLink } = require('mavlink');
 ## ㅇjson 라이브러리 - 추출한 필드를 JSON 형식으로 변환
 
 JavaScript 내장 라이브러리 (별도의 설치나 import 불필요)
-
----------------------------------------------------
 
 # [MQTT 브로커(mosquitto 서버) 구독 테스트 터미널 명령]
 mosquitto_sub -h localhost -t /mytopic/1
