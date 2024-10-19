@@ -1,8 +1,6 @@
-## 개요
-드론으로부터 오는 MAVLink 메시지를 json으로 파싱하고, Flask 서버로 전송하는 코드는 pxy_mqtt.js 파일에 작성 예정
-
-1. pymavlink 라이브러리 사용 - MAVLink 메시지의 각 필드를 추출
-2. json 라이브러리 사용 - 추출한 필드를 JSON 형식으로 변환
+## 사용 라이브러리
+1. pymavlink 라이브러리 - MAVLink 메시지의 각 필드를 추출
+2. json 라이브러리 - 추출한 필드를 JSON 형식으로 변환
 
 ## mobius.js (mobius 서버 실행 파일)
 % node mobius.js
