@@ -1,14 +1,19 @@
-## mqtt 프로토콜 라이브러리 - 발행(publish) 역할
+## mqtt 프로토콜 라이브러리
+[발행(publish) 역할]
+
 설치 명령어: % npm install mqtt
 
 import문: const mqtt = require('mqtt');
 
-## pymavlink 라이브러리 - MAVLink 메시지의 각 필드를 추출
+## pymavlink 라이브러리
+[MAVLink 메시지의 각 필드를 추출]
+
 설치 명령어: % npm install mavlink
 
 import문: const { MAVLink } = require('mavlink');
 
-## json 라이브러리 - 추출한 필드를 JSON 형식으로 변환
+## json 라이브러리
+[추출한 필드를 JSON 형식으로 변환]
 
 JavaScript 내장 라이브러리 (별도의 설치나 import 불필요)
 
