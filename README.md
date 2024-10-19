@@ -15,4 +15,5 @@ Flask 서버 측: json → MAVLink 메시지(이진 형태) 파싱 필요
 
 ## SITL 연결
 하지만 다수의 실제 드론으로 테스트하는 것은 효율적이지 못하므로, SITL(드론 시뮬레이션)을 이용한다
+
 SITL이 가상의 드론 데이터를 MAVLink 메시지 형태로 Mobius-Broker에 전송하게 된다 - MQTT 프로토콜
