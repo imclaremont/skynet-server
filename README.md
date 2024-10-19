@@ -8,7 +8,7 @@
 
 ## Mobius-Broker 서버 역할
 1. SITL 연결: 다수의 실제 드론으로 테스트하는 것은 효율적이지 못하므로, SITL(드론 시뮬레이션)을 이용한다. (SITL이 MQTT 프로토콜을 이용하여 가상의 드론 데이터를 MAVLink 메시지 형태로 Mobius-Broker에 전송)
-2. MAVLink 메시지 수신 및 json 데이터로 파싱: 드론(SITL)으로부터 온 MAVLink 메시지를 수신하고, 이를 JSON으로 변환한 후 MySQL 데이터베이스에 저장하거나 필요한 처리를 한다.
+2. MAVLink 메시지 수신 및 json 데이터로 파싱: 드론(SITL)으로부터 온 MAVLink 메시지를 수신하고, 이를 json으로 변환한 후 MySQL 데이터베이스에 저장하거나 필요한 처리를 한다.
 3. Flask 서버와의 통신: Flask 서버는 필요할 때 Mobius-Broker에서 데이터를 조회하거나, 경로를 계산해 결과를 다시 드론에게 전달한다.
 (Mobius-Broker는 주로 데이터 브로커 역할을 수행하며, 특정한 비즈니스 로직(API)를 제공하는 주체는 x)
 
