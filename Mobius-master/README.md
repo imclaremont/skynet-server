@@ -24,26 +24,26 @@ CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 
 
 3. Flask 서버로 전송: mqtt.connect() 부분의 'mqtt://flask_server_ip'에는 실제 Flask 서버의 IP 주소를 입력
 
-## MQTT 라이브러리 - 발행(publish) 역할
+## 1. MQTT 라이브러리 - 발행(publish) 역할
 
 설치 명령어) % npm install mqtt
 
 import문) const mqtt = require('mqtt');
 
-## pymavlink 라이브러리 - MAVLink 메시지의 각 필드를 추출
+## 2. pymavlink 라이브러리 - MAVLink 메시지의 각 필드를 추출
 
 설치 명령어) % npm install mavlink
 
 import문) const { MAVLink } = require('mavlink');
 
-## json 라이브러리 - 추출한 필드를 JSON 형식으로 변환
+## 3. json 라이브러리 - 추출한 필드를 JSON 형식으로 변환
 
 JavaScript 내장 라이브러리 (별도의 설치나 import 불필요)
 
-## MQTT 브로커(mosquitto 서버) 구독 테스트 터미널 명령
+## ㅁMQTT 브로커(mosquitto 서버) 구독 테스트 터미널 명령
 mosquitto_sub -h localhost -t /mytopic/1
 
-## MQTT 브로커(mosquitto 서버) 발행 테스트 터미널 명령
+## ㅁMQTT 브로커(mosquitto 서버) 발행 테스트 터미널 명령
 mosquitto_pub -h localhost -t /mytopic/1 -m "Hello MQTT test"
 
 ## SITL 연결 (w/한신님)
