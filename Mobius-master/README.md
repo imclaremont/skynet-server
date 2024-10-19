@@ -49,4 +49,4 @@ mosquitto_sub -h localhost -t /mytopic/1
 ## MQTT 브로커(mosquitto 서버) 발행 테스트 터미널 명령
 mosquitto_pub -h localhost -t /mytopic/1 -m "Hello MQTT test"
 
-## SITL 연결(w/한신)
+## SITL 연결(w/한신님)
