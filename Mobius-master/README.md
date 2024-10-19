@@ -1,4 +1,4 @@
-## 사용 라이브러리
+## 사용 라이브러리 3가지
 1. mqtt 라이브러리: 발행(publish) 역할
 
 설치 명령어) % npm install mqtt
