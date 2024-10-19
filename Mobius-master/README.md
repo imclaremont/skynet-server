@@ -1,4 +1,4 @@
-## mqtt 프로토콜 라이브러리
+## mqtt 라이브러리
 [발행(publish) 역할]
 
 설치 명령어: % npm install mqtt
