@@ -15,7 +15,7 @@
 
 ## Flask 서버 역할
 1. 경로 계산 요청 처리: Flask 서버는 드론의 경로를 계산하는 로직을 처리하며, 필요한 데이터를 Mobius의 MySQL 데이터베이스에서 조회할 수 있다.
-2. json 데이터 수신 및 MAVLink 메시지로 파싱: Mobius-Broker로부터 온 json 데이터를 이용하며, 드론에게 데이터 전송 시 MAVLink 메시지로 파싱한다.
+2. json 데이터 수신 및 MAVLink 메시지로 파싱: 드론에게 데이터 전송 시 json 데이터를 MAVLink 메시지로 파싱한다.
    
 (Flask 서버에서 REST API를 정의하여, 경로 계산 및 데이터 요청을 처리)
 
