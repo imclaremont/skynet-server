@@ -19,7 +19,7 @@ CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 
 
 ---------------------------------------------------
 
-## pxy_mqtt.js (MQTT 프록시 파일)
+## **pxy_mqtt.js (MQTT 프록시 파일)**
 ### 1. pxy_ws.js 내용과 동일 (CSE 비활성화)
 
 ### 2. MAVLink 메시지를 json 데이터 형식으로 파싱: mqtt_message_handler() 함수 + mavlinkToJSON() 함수
