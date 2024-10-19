@@ -20,12 +20,12 @@ app.put('/default', onem2mParser, (request, response) => {
 app.delete('/default', onem2mParser, (request, response) => {
 
 ## pxy_ws.js
-1. node mobius.js 로 서버 실행 시에 Target CSE(localhost) is not ready 가 뜨는 문제 발생
+node mobius.js 로 서버 실행 시에 Target CSE(localhost) is not ready 가 뜨는 문제 발생
 
 CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 처리로 해결
 
 ## pxy_mqtt.js
-1. pxy_ws.js 1번과 동일
+1. pxy_ws.js 내용과 동일 (CSE 비활성화)
 
 2. MAVLink 메시지를 json 데이터 형식으로 파싱하고, Flask 서버로 전송하는 로직 구현 (mqtt_message_handler 함수)
 
