@@ -23,7 +23,7 @@ CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 
 ### 2. MAVLink 메시지를 json 데이터 형식으로 파싱: mqtt_message_handler() 함수 + mavlinkToJSON() 함수
 
 ### [추출할 데이터 4가지]
-https://claremont.tistory.com/entry/MAVLink-%EB%A9%94%EC%8B%9C%EC%A7%80-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%B6%94%EC%B6%9C%EB%B2%95
+https://claremont.tistory.com/entry/MAVLink-%EB%A9%94%EC%8B%9C%EC%A7%80-%E2%86%92-JSON-%ED%8C%8C%EC%8B%B1
 
 #### ① 드론 ID
 #### ② 경도/위도
