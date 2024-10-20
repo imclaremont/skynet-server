@@ -25,13 +25,18 @@ CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 
 ### 추출할 데이터 4가지: 드론 ID, 경도/위도, 배터리 잔량, mission_item(현재 가고 있는 목표지점을 알 수 있는지 확인하는 용도)
 https://claremont.tistory.com/entry/MAVLink-%EB%A9%94%EC%8B%9C%EC%A7%80-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%B6%94%EC%B6%9C%EB%B2%95
 
+#### ① 드론 ID
+#### ② 경도/위도
+#### ③ 배터리 잔량
+#### ④ mission_item(현재 가고 있는 목표지점을 알 수 있는지 확인하는 용도)
+
 ### 3. Flask 서버로 전송: mqtt.connect() 부분의 'mqtt://flask_server_ip'에는 실제 Flask 서버의 IP 주소를 입력
 
 ###  (참고) pxy_mqtt.js 파일에서 사용하는 라이브러리 3가지
 https://claremont.tistory.com/entry/Nodejs-MQTT-PyMAVLink-JSON-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC
-#### ① MQTT 라이브러리 - 발행(publish) 역할
-#### ② pymavlink 라이브러리 - MAVLink 메시지의 각 필드를 추출
-#### ③ json 라이브러리 - 추출한 필드를 JSON 형식으로 변환
+#### ① MQTT 라이브러리
+#### ② pymavlink 라이브러리
+#### ③ json 라이브러리
 
 ## [MQTT 브로커(mosquitto 서버) 구독 테스트 터미널 명령]
 mosquitto_sub -h localhost -t /mytopic/1
