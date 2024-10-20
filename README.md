@@ -8,7 +8,7 @@
 
 ## Mobius 서버 역할
 1. SITL 연결(드론 시뮬레이션): 다수의 실제 드론으로 테스트할 수 없는 경우에는, SITL을 이용한다. (SITL이 MQTT 프로토콜을 이용하여 가상의 드론 데이터를 MAVLink 메시지 형태로 Mobius-Broker에 전송)
-2. MAVLink 메시지 수신 및 json 데이터로 파싱: 드론(SITL)으로부터 온 MAVLink 메시지를 수신하고, 이를 json으로 변환한 후 MySQL 데이터베이스에 저장하거나 Flask 서버에 전달한다.
+2. MAVLink 메시지 수신 및 json 데이터로 파싱: 드론(SITL)으로부터 온 MAVLink 메시지를 수신하고, 이를 json으로 변환한 후 MySQL 데이터베이스에 저장하고 Flask 서버에 전달한다.
 
 ## Flask 서버 역할
 1. 경로 계산 요청 처리(REST API): Flask 서버는 드론의 경로를 계산하는 로직을 처리하며, 필요한 데이터를 Mobius의 MySQL 데이터베이스에서 조회할 수 있다.
