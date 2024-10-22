@@ -25,7 +25,7 @@ CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 
 ### [추출할 데이터 4가지]
 https://claremont.tistory.com/entry/MAVLink-%EB%A9%94%EC%8B%9C%EC%A7%80-%E2%86%92-JSON-%ED%8C%8C%EC%8B%B1-%ED%9B%84-Flask-%EC%84%9C%EB%B2%84-%EC%A0%84%EC%86%A1-%EC%98%88%EC%8B%9C-%EC%BD%94%EB%93%9C
 
-#### ① 드론 ID 및 상태(ARMED/DISARMED, GUIDED) - MQTT topic: 'drone/status'
+#### ① 드론 ID 및 상태(ARMED or DISARMED, GUIDED) - MQTT topic: 'drone/status'
 #### ② 경도/위도 및 고도(절대고도/해발고도) - MQTT topic: 'drone/position'
 #### ③ 배터리 잔량 - MQTT topic: 'drone/battery_status'
 #### ④ mission_item(현재 가고 있는 목표지점을 알 수 있는지 확인하는 용도) - MQTT topic: 'drone/mission_status'
