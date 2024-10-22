@@ -26,7 +26,7 @@ CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 
 https://claremont.tistory.com/entry/MAVLink-%EB%A9%94%EC%8B%9C%EC%A7%80-%E2%86%92-JSON-%ED%8C%8C%EC%8B%B1
 
 #### ① 드론 ID - MQTT topic: 'drone/id'
-#### ② 경도/위도 - MQTT topic: 'drone/position'
+#### ② 경도/위도 및 고도(절대고도, 해발고도) - MQTT topic: 'drone/position'
 #### ③ 배터리 잔량 - MQTT topic: 'drone/battery_status'
 #### ④ mission_item(현재 가고 있는 목표지점을 알 수 있는지 확인하는 용도) - MQTT topic: 'drone/mission_status'
 
