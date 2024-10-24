@@ -80,6 +80,7 @@ exports.ws_watchdog = function() {
         }
     }
     else if(ws_state === 'connect') {
+        /* CSE를 사용하지 않으므로 비활성화
         http_retrieve_CSEBase(function(status, res_body) {
             if (status == '2000') {
                 var jsonObj = JSON.parse(res_body);
@@ -91,6 +92,7 @@ exports.ws_watchdog = function() {
                 console.log('Target CSE(' + usewscbhost + ') is not ready');
             }
         });
+        */
     }
     else if(ws_state === 'connecting') {
         if(pxy_ws_server == null) {
