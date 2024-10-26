@@ -3,11 +3,15 @@
 ### flask_server.py
 - Flask 서버로, MQTT 브로커로부터 수신한 메시지를 처리, 기상 정보 획득
 
+#### '/drones', methods=['GET'] : 현재 드론 상태를 JSON 형태로 반환하는 임시 엔드포인트
+
 ### mqtt_client.py
 - MQTT 클라이언트로서 특정 토픽을 구독하고, 데이터를 수신하여 처리
 
-#### 임시: MQTT topic을 'drone/request' 하나로 drone 데이터를 처리.
-
+#### ① 드론 ID 및 상태(ARMED or DISARMED, GUIDED) - MQTT topic: 'drone/status'
+#### ② 경도/위도 및 고도(절대고도 = 해발고도) - MQTT topic: 'drone/position'
+#### ③ 배터리 잔량 - MQTT topic: 'drone/battery_status'
+#### ④ mission_item(현재 가고 있는 목표지점을 알 수 있는지 확인하는 용도) - MQTT topic: 'drone/mission_status'
  
 ### weather_api.py
 - 기상청 API를 이용해 현재 시각을 기준으로 기상 정보를 수신하고, 드론 운행에 필요한 데이터를 처리
