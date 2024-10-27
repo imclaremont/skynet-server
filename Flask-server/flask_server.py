@@ -41,10 +41,9 @@ def pathfinding():
 # 임시 현재 드론 상태를 반환하는 엔드포인트
 @app.route('/drones', methods=['GET'])
 def get_drones():
-
-    print("\nCall get_drone!!\n")
-
     drones = get_drone_status()  # 드론 상태를 가져옴
+
+    print(f"\n{drones}\n")
     return jsonify(drones)
 
 #Flask 서버를 실행

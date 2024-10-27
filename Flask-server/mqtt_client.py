@@ -18,8 +18,10 @@ TOPICS = [
 drone_info = {
     'drone_id': None,
     'isArmed': None,
-    'guided': None,
-    'position': None,
+    'isGuided': None,
+    'latitude': None,
+    'longitude': None,
+    'altitude': None,
     'battery_status': None,
     'mission_status': None
 }
@@ -62,10 +64,13 @@ def get_drone_status(topic, payload):
     if topic == 'drone/status':
         drone_info['drone_id'] = data['system_id']
         drone_info['isArmed'] = data['armed']
-        drone_info['guided'] = data['guided']
+        drone_info['isGuided'] = data['guided']
 
     elif topic == 'drone/position':
-        drone_info['position'] = data  # 전체 데이터로 설정
+        drone_info['latitude'] = data['latitude']
+        drone_info['longitude'] = data['longitude']
+        drone_info['altitude'] = data['altitude']
+
 
     elif topic == 'drone/battery_status':
         drone_info['battery_status'] = data['battery_remaining']
@@ -73,17 +78,20 @@ def get_drone_status(topic, payload):
     elif topic == 'drone/mission_status':
         drone_info['mission_status'] = data['mission_sequence']
 
+
     # 모든 정보가 수집된 경우에만 드론 객체 생성
     if all(value is not None for value in drone_info.values()):
         drone_obj = drone.Drone(
             drone_info['drone_id'],
             drone_info['isArmed'],
-            drone_info['guided'],
-            drone_info['position'],
+            drone_info['isGuided'],
+            drone_info['latitude'],
+            drone_info['longitude'],
+            drone_info['altitude'],
             drone_info['battery_status'],
             drone_info['mission_status']
         )
-        print(f"\nCall update_drone!!\n")
+        print(f"\nCall update_drone\n")
         drone.update_drone_status(drone_obj)
                 
         # 드론 정보 초기화
@@ -94,8 +102,10 @@ def reset_drone_info():
     drone_info = {
         'drone_id': None,
         'isArmed': None,
-        'guided': None,
-        'position': None,
+        'isGuided': None,
+        'latitude': None,
+        'longitude': None,
+        'altitude': None,
         'battery_status': None,
         'mission_status': None
     }

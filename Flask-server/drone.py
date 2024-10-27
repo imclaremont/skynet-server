@@ -4,11 +4,13 @@ drone_statuses = {}
 
 #드론 클래스 정의
 class Drone:
-    def __init__(self, drone_id, isArmed, guided, position, battery_status, mission_status):
+    def __init__(self, drone_id, isArmed, isGuided, latitude, longitude, altitude, battery_status, mission_status):
         self.id = drone_id
         self.isArmed = isArmed
-        self.guided = guided
-        self.position = position
+        self.isGuided = isGuided
+        self.latitude = latitude
+        self.longitude = longitude
+        self.altitude = altitude
         self.battery_status = battery_status
         self.mission_status = mission_status
 
@@ -24,13 +26,13 @@ class Drone:
 def update_drone_status(drone):
     drone_statuses[drone.id] = {
         "isArmed": drone.isArmed,
-        "guided": drone.guided,
-        "position": drone.position,
+        "isGuided": drone.isGuided,
+        "latitude": drone.latitude,
+        "longitude": drone.longitude,
+        "altitude": drone.altitude,
         "battery": drone.battery_status,
         "mission_status": drone.mission_status
     }
-
-    print(f"\ndrone_statuses :\n {drone_statuses}")
 
 #현재 드론 상태 정보를 반환
 def get_drone_status(): 
