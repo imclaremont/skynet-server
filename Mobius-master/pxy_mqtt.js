@@ -182,7 +182,7 @@ function reg_req_sub() {
     // console.log('subscribe reg_req_topic as ' + reg_req_topic);
 }
 
-const flaskClient = mqtt.connect('mqtt://flask_server_ip'); // Flask 서버 IP 입력
+const flaskClient = mqtt.connect('127.0.0.1'); // Flask 서버 IP 입력
 
 flaskClient.on('connect', () => {
     console.log('Connected to Flask server');
@@ -200,6 +200,9 @@ function mqtt_message_handler(topic, message) {
         try {
             const mavlinkParser = new MAVLink();
             const parsedMessage = mavlinkParser.parseBuffer(message);
+
+            // 데이터가 정상적으로 파싱되었을 때 성공 메시지 출력
+            console.log('Successfully received and parsed data from SITL: ', parsedMessage);
 
             // 1. 드론 ID 및 상태: HEARTBEAT 메시지
             if (parsedMessage.message_name === 'HEARTBEAT') {
