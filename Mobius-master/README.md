@@ -1,5 +1,6 @@
 ## mobius.js (mobius 서버 실행 파일)
-% node mobius.js
+your_MySQL_password에 본인의 MySQL 비밀번호로 수정하시면 됩니다
+mobius 서버 실행 명령어: node mobius.js
 
 ## app.js (main 역할을 수행하는 파일)
 모든 RESTful method에 비어있었던 경로값을 '/default'로 설정 
