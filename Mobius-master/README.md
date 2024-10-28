@@ -40,13 +40,10 @@ https://claremont.tistory.com/entry/Nodejs-MQTT-PyMAVLink-JSON-%EB%9D%BC%EC%9D%B
 #### ② pymavlink 라이브러리
 #### ③ json 라이브러리
 
+---------------------------------------------------
+
 ## [MQTT 브로커(mosquitto 서버) 구독 테스트 터미널 명령]
 mosquitto_sub -h localhost -t /mytopic/1
 
 ## [MQTT 브로커(mosquitto 서버) 발행 테스트 터미널 명령]
 mosquitto_pub -h localhost -t /mytopic/1 -m "Hello MQTT test"
-
----------------------------------------------------
-
-## SITL 연결 (w/한신님)
-진행 예정
