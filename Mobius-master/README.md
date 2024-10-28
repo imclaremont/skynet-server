@@ -1,7 +1,7 @@
-## mobius.js (mobius 서버 실행 파일)
+## mobius.js [mobius 서버 실행 명령어: node mobius.js]
 your_MySQL_password에 본인의 MySQL 비밀번호로 수정하시면 됩니다
 
-mobius 서버 실행 명령어: node mobius.js
+sitl 없이 mobius 서버와 flask 서버 간의 통신 테스트 코드 맨 아래에 주석처리 해두었습니다
 
 ## app.js (main 역할을 수행하는 파일)
 모든 RESTful method에 비어있었던 경로값을 '/default'로 설정 
@@ -32,7 +32,7 @@ https://claremont.tistory.com/entry/MAVLink-%EB%A9%94%EC%8B%9C%EC%A7%80-%E2%86%9
 #### ③ 배터리 잔량 - MQTT topic: 'drone/battery_status'
 #### ④ mission_item(현재 가고 있는 목표지점을 알 수 있는지 확인하는 용도) - MQTT topic: 'drone/mission_status'
 
-### 3. Flask 서버로 전송: mqtt.connect() 부분의 'mqtt://flask_server_ip'에는 실제 Flask 서버의 IP 주소를 입력
+### 3. Flask 서버로 전송: mqtt.connect() 부분의 '127.0.0.1'에는 실제 Flask 서버의 IP 주소를 입력
 
 ###  (참고) pxy_mqtt.js 파일에서 사용하는 라이브러리 3가지
 https://claremont.tistory.com/entry/Nodejs-MQTT-PyMAVLink-JSON-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC
