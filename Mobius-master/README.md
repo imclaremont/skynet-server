@@ -1,5 +1,6 @@
 ## mobius.js (mobius 서버 실행 파일)
 your_MySQL_password에 본인의 MySQL 비밀번호로 수정하시면 됩니다
+
 mobius 서버 실행 명령어: node mobius.js
 
 ## app.js (main 역할을 수행하는 파일)
