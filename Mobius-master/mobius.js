@@ -21,7 +21,7 @@ try {
     conf = JSON.parse(fs.readFileSync('conf.json', 'utf8'));
 }
 catch (e) {
-    conf.csebaseport = "5000";
+    conf.csebaseport = "7579";
     conf.dbpass = "your_MySQL_password";
     fs.writeFileSync('conf.json', JSON.stringify(conf, null, 4), 'utf8');
 }
