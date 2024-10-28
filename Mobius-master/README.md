@@ -1,5 +1,5 @@
 ## mobius.js (mobius 서버 실행 명령어: node mobius.js)
-your_MySQL_password에 본인의 MySQL 비밀번호로 수정하시면 됩니다
+your_MySQL_password에 본인의 MySQL pwd로 수정 필요
 
 ※ sitl 없이 mobius 서버와 flask 서버 간의 통신 테스트 코드 맨 아래에 주석처리 해두었습니다. 필요하시면 사용하시길!
 
