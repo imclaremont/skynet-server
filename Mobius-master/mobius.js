@@ -21,8 +21,8 @@ try {
     conf = JSON.parse(fs.readFileSync('conf.json', 'utf8'));
 }
 catch (e) {
-    conf.csebaseport = "7579";
-    conf.dbpass = "Ehdgjs1004!";
+    conf.csebaseport = "5000";
+    conf.dbpass = "your_MySQL_password";
     fs.writeFileSync('conf.json', JSON.stringify(conf, null, 4), 'utf8');
 }
 
@@ -51,7 +51,7 @@ global.use_mqtt_broker      = 'localhost'; // mqttbroker for mobius
 
 global.use_secure           = 'disable';
 global.use_mqtt_port        = '1883';
-if(use_secure === 'enable') {
+if (use_secure === 'enable') {
     use_mqtt_port           = '8883';
 }
 
@@ -74,3 +74,34 @@ global.useCert = 'disable';
 
 // CSE core
 require('./app');
+
+
+
+/*
+flask와 mobius간의 통신을 확인하는 과정에서 sitl 연결이 없으면 드론으로부터 들어오는 데이터를 publish 할 수가 없다.
+따라서 아래의 코드는 직접 테스트용 json 데이터를 만들어 flask 서버로 보내는 코드이다
+
+const mqtt = require('mqtt');
+const client = mqtt.connect('mqtt://localhost:1883');
+
+client.on('connect', () => {
+    console.log('Connected to MQTT broker');
+
+    // 테스트용 JSON 데이터
+    const testData = {
+        status: "test",
+        latitude: 37.5665,
+        longitude: 126.9780,
+        altitude: 150
+    };
+
+    // 'drone/status' 주제로 Flask 서버에 테스트 데이터 전송
+    client.publish('drone/status', JSON.stringify(testData), (error) => {
+        if (error) {
+            console.error('Error publishing test data:', error);
+        } else {
+            console.log('Test data published to drone/status');
+        }
+    });
+});
+*/
