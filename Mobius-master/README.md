@@ -30,12 +30,15 @@ https://claremont.tistory.com/entry/MAVLink-%EB%A9%94%EC%8B%9C%EC%A7%80-%E2%86%9
 #### ① 드론 ID 및 상태(ARMED or DISARMED, GUIDED) - MQTT topic: 'drone/status'
 
 필드명: system_id, armed, guided, timestamp
+
 #### ② 경도/위도 및 고도(절대고도 = 해발고도) - MQTT topic: 'drone/position'
 
 필드명: latitude, longitude, altitude, timestamp
+
 #### ③ 배터리 잔량 - MQTT topic: 'drone/battery_status'
 
 필드명: battery_remaining, timestamp
+
 #### ④ mission_item(현재 가고 있는 목표지점을 알 수 있는지 확인하는 용도) - MQTT topic: 'drone/mission_status'
 
 필드명: mission_sequence, timestamp
