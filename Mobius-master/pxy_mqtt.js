@@ -200,9 +200,17 @@ function mqtt_message_handler(topic, message) {
         try {
             const parsedMessage = JSON.parse(message.toString());
             console.log('Successfully received HEARTBEAT message from SITL:', parsedMessage);
-
+            
+            // 필요한 데이터만 추출
+            const jsonData = { 
+                system_id: parsedMessage.system_id,
+                armed: parsedMessage.armed,
+                guided: parsedMessage.guided,
+                timestamp: parsedMessage.timestamp
+            };
+            
             // MQTT를 통해 JSON 데이터를 Flask 서버로 전송
-            flaskClient.publish('drone/status', JSON.stringify(parsedMessage));
+            flaskClient.publish('drone/status', JSON.stringify(jsonData));
             console.log('Sent HEARTBEAT data to Flask server');
             
         } catch (error) {
@@ -213,9 +221,17 @@ function mqtt_message_handler(topic, message) {
         try {
             const parsedMessage = JSON.parse(message.toString());
             console.log('Successfully received GLOBAL_POSITION_INT message from SITL:', parsedMessage);
-
+            
+            // 필요한 데이터만 추출
+            const jsonData = { 
+                latitude: parsedMessage.latitude,
+                longitude: parsedMessage.longitude,
+                altitude: parsedMessage.altitude,
+                timestamp: parsedMessage.timestamp
+            };
+            
             // MQTT를 통해 JSON 데이터를 Flask 서버로 전송
-            flaskClient.publish('drone/position', JSON.stringify(parsedMessage));
+            flaskClient.publish('drone/position', JSON.stringify(jsonData));
             console.log('Sent GLOBAL_POSITION_INT data to Flask server');
 
         } catch (error) {
@@ -226,9 +242,15 @@ function mqtt_message_handler(topic, message) {
         try {
             const parsedMessage = JSON.parse(message.toString());
             console.log('Successfully received SYS_STATUS message from SITL:', parsedMessage);
+            
+            // 필요한 데이터만 추출
+            const jsonData = {
+                battery_remaining: parsedMessage.battery_remaining,
+                timestamp: parsedMessage.timestamp
+            };
 
             // MQTT를 통해 JSON 데이터를 Flask 서버로 전송
-            flaskClient.publish('drone/battery_status', JSON.stringify(parsedMessage));
+            flaskClient.publish('drone/battery_status', JSON.stringify(jsonData));
             console.log('Sent SYS_STATUS data to Flask server');
 
         } catch (error) {
@@ -239,9 +261,15 @@ function mqtt_message_handler(topic, message) {
         try {
             const parsedMessage = JSON.parse(message.toString());
             console.log('Successfully received MISSION_CURRENT message from SITL:', parsedMessage);
-
+            
+            // 필요한 데이터만 추출
+            const jsonData = {
+                mission_sequence: parsedMessage.mission_sequence,
+                timestamp: parsedMessage.timestamp
+            };
+            
             // MQTT를 통해 JSON 데이터를 Flask 서버로 전송
-            flaskClient.publish('drone/mission_status', JSON.stringify(parsedMessage));
+            flaskClient.publish('drone/mission_status', JSON.stringify(jsonData));
             console.log('Sent MISSION_CURRENT data to Flask server');
 
         } catch (error) {
