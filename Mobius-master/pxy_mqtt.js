@@ -113,7 +113,7 @@ exports.mqtt_watchdog = function() {
     else if(mqtt_state === 'connecting') {
         if(pxymqtt_client == null) {
             if(use_secure === 'disable') {
-                pxymqtt_client = mqtt.connect('mqtt://127.0.0.1:1883');
+                pxymqtt_client = mqtt.connect('mqtt://127.0.0.1:1884');
             }
             else {
                 var connectOptions = {
@@ -182,7 +182,7 @@ function reg_req_sub() {
     // console.log('subscribe reg_req_topic as ' + reg_req_topic);
 }
 
-const flaskClient = mqtt.connect('mqtt://127.0.0.1:1883'); // Flask 서버 IP 및 포트 입력
+const flaskClient = mqtt.connect('mqtt://127.0.0.1:1884'); // Flask 서버 IP 및 포트 입력
 
 flaskClient.on('connect', () => {
     console.log('Connected to Flask server');
