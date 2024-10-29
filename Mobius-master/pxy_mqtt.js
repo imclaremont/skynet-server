@@ -195,95 +195,61 @@ flaskClient.on('error', (err) => {
 function mqtt_message_handler(topic, message) {
     const topic_arr = topic.split('/');
 
-    // MAVLink 메시지 처리 로직 추가
-    if (topic_arr.includes('mavlink')) {
+    // OneDrone으로부터 온 메시지 처리 로직 추가 (MQTT 토픽별로 분류해 처리)
+    if (topic === 'drone/status') {
         try {
-            const mavlinkParser = new MAVLink();
-            const parsedMessage = mavlinkParser.parseBuffer(message);
+            const parsedMessage = JSON.parse(message.toString());
+            console.log('Successfully received HEARTBEAT message from SITL:', parsedMessage);
 
-            // 데이터가 정상적으로 파싱되었을 때 성공 메시지 출력
-            console.log('Successfully received and parsed data from SITL: ', parsedMessage);
-
-            // 1. 드론 ID 및 상태: HEARTBEAT 메시지
-            if (parsedMessage.message_name === 'HEARTBEAT') {
-                try {
-                    const isArmed = parsedMessage.base_mode & MAV_MODE_FLAG_SAFETY_ARMED;
-                    const isGuided = parsedMessage.base_mode & MAV_MODE_FLAG_CUSTOM_MODE_ENABLED && parsedMessage.custom_mode === 4; // ArduPilot 기준 GUIDED 모드일 때 custom_mode 값은 4
-
-                    // JSON 형식으로 변환
-                    const jsonData = {
-                        system_id: parsedMessage.metadata.system_id,
-                        armed: isArmed ? "ARMED" : "DISARMED",
-                        guided: isGuided ? "GUIDED" : "NOT GUIDED",
-                        message_type: 'HEARTBEAT',
-                        timestamp: new Date().toISOString(),
-                    };
-
-                    // MQTT를 통해 JSON 데이터를 Flask 서버에 전송
-                    flaskClient.publish('drone/status', JSON.stringify(jsonData));
-                } catch (error) {
-                    console.error('Error parsing drone status (HEARTBEAT) message:', error);
-                }
-            }
-            // 2. 위도/경도 및 고도: GLOBAL_POSITION_INT 메시지
-            if (parsedMessage.message_name === 'GLOBAL_POSITION_INT') {
-                try {
-                    // 메시지의 위도, 경도, 고도 값을 추출 (단위: 1E7 및 밀리미터)
-                    const latitude = parsedMessage.lat / 1e7; // 실제 위도 값으로 변환
-                    const longitude = parsedMessage.lon / 1e7; // 실제 경도 값으로 변환
-                    const altitude = parsedMessage.alt / 1000; // 밀리미터 단위에서 미터 단위로 변환
-                
-                    // JSON 형식으로 변환
-                    const jsonData = {
-                        latitude: latitude.toFixed(6), // 소수점 6자리까지 반올림
-                        longitude: longitude.toFixed(6), // 소수점 6자리까지 반올림
-                        altitude: altitude.toFixed(2), // 소수점 2자리까지 반올림
-                        message_type: 'GLOBAL_POSITION_INT',
-                        timestamp: new Date().toISOString(),
-                    };
-                
-                    // MQTT를 통해 JSON 데이터를 Flask 서버에 전송
-                    flaskClient.publish('drone/position', JSON.stringify(jsonData));
-                } catch (error) {
-                    console.error('Error parsing latitude / longitude / altitude (GLOBAL_POSITION_INT) message:', error);
-                }
-            }
-            // 3. 배터리 잔량(단위: %): SYS_STATUS 메시지
-            if (parsedMessage.message_name === 'SYS_STATUS') {
-                try {
-                    // JSON 형식으로 변환
-                    const jsonData = {
-                        battery_remaining: parsedMessage.battery_remaining,
-                        message_type: 'SYS_STATUS',
-                        timestamp: new Date().toISOString(),
-                    };
-
-                    // MQTT를 통해 JSON 데이터를 Flask 서버에 전송
-                    flaskClient.publish('drone/battery_status', JSON.stringify(jsonData));
-                } catch (error) {
-                    console.error('Error parsing battery (SYS_STATUS) message:', error);
-                }
-            }
-            // 4. 현재 미션 아이템: MISSION_CURRENT 메시지
-            if (parsedMessage.message_name === 'MISSION_CURRENT') {
-                try {
-                    // JSON 형식으로 변환
-                    const jsonData = {
-                        mission_sequence: parsedMessage.seq,
-                        message_type: 'MISSION_CURRENT',
-                        timestamp: new Date().toISOString(),
-                    };
-
-                    // MQTT를 통해 JSON 데이터를 Flask 서버에 전송
-                    flaskClient.publish('drone/mission_status', JSON.stringify(jsonData));
-                } catch (error) {
-                    console.error('Error parsing mission item (MISSION_CURRENT) message:', error);
-                }
-            }
+            // MQTT를 통해 JSON 데이터를 Flask 서버로 전송
+            flaskClient.publish('drone/status', JSON.stringify(parsedMessage));
+            console.log('Sent HEARTBEAT data to Flask server');
+            
         } catch (error) {
-            console.error(`Error parsing MAVLink message on topic "${topic}": ${error.message}`);
-            console.error(error.stack);
+            console.error('Error processing HEARTBEAT message:', error.message);
         }
+    } 
+    else if (topic === 'drone/position') {
+        try {
+            const parsedMessage = JSON.parse(message.toString());
+            console.log('Successfully received GLOBAL_POSITION_INT message from SITL:', parsedMessage);
+
+            // MQTT를 통해 JSON 데이터를 Flask 서버로 전송
+            flaskClient.publish('drone/position', JSON.stringify(parsedMessage));
+            console.log('Sent GLOBAL_POSITION_INT data to Flask server');
+
+        } catch (error) {
+            console.error('Error processing GLOBAL_POSITION_INT message:', error.message);
+        }
+    } 
+    else if (topic === 'drone/battery_status') {
+        try {
+            const parsedMessage = JSON.parse(message.toString());
+            console.log('Successfully received SYS_STATUS message from SITL:', parsedMessage);
+
+            // MQTT를 통해 JSON 데이터를 Flask 서버로 전송
+            flaskClient.publish('drone/battery_status', JSON.stringify(parsedMessage));
+            console.log('Sent SYS_STATUS data to Flask server');
+
+        } catch (error) {
+            console.error('Error processing SYS_STATUS message:', error.message);
+        }
+    } 
+    else if (topic === 'drone/mission_status') {
+        try {
+            const parsedMessage = JSON.parse(message.toString());
+            console.log('Successfully received MISSION_CURRENT message from SITL:', parsedMessage);
+
+            // MQTT를 통해 JSON 데이터를 Flask 서버로 전송
+            flaskClient.publish('drone/mission_status', JSON.stringify(parsedMessage));
+            console.log('Sent MISSION_CURRENT data to Flask server');
+
+        } catch (error) {
+            console.error('Error processing MISSION_CURRENT message:', error.message);
+        }
+    } 
+    else {
+        console.warn(`Unrecognized topic: ${topic}`);
     }
 
     // 기존 메시지 처리 로직
