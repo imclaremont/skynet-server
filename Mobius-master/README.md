@@ -46,7 +46,7 @@ https://claremont.tistory.com/entry/MAVLink-%EB%A9%94%EC%8B%9C%EC%A7%80-%E2%86%9
 ### 3. Flask 서버로 전송: mqtt.connect() 부분의 '127.0.0.1'에는 실제 Flask 서버의 IP 주소를 입력
 
 ###  (참고) pxy_mqtt.js 파일에서 사용하는 라이브러리 3가지
-https://claremont.tistory.com/entry/Nodejs-MQTT-PyMAVLink-JSON-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC
+https://claremont.tistory.com/entry/Nodejs-MQTT-MAVLink-JSON-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC
 #### ① MQTT 라이브러리
 #### ② pymavlink 라이브러리
 #### ③ json 라이브러리
