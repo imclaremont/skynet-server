@@ -47,7 +47,7 @@ CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 
 ###  (참고) pxy_mqtt.js 파일에서 사용하는 라이브러리 3가지
 https://claremont.tistory.com/entry/Nodejs-MQTT-MAVLink-JSON-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC
 #### ① MQTT 라이브러리
-#### ② pymavlink 라이브러리
+#### ② MAVLink 라이브러리
 #### ③ json 라이브러리
 
 ---------------------------------------------------
