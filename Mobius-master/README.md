@@ -22,7 +22,7 @@ CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 
 ## pxy_mqtt.js (MQTT 프록시 파일)
 ### 1. pxy_ws.js 내용과 동일 (CSE 비활성화)
 
-### 2. OneDrone으로부터 온 JSON 데이터에서 필요한 데이터만 추출: mqtt_message_handler() 함수
+### 2. OneDrone으로부터 온 JSON 데이터 처리 로직: mqtt_message_handler() 함수
 
 ### [추출할 데이터 4가지]
 https://claremont.tistory.com/entry/MAVLink-%EB%A9%94%EC%8B%9C%EC%A7%80-%E2%86%92-JSON-%ED%8C%8C%EC%8B%B1-%ED%9B%84-Flask-%EC%84%9C%EB%B2%84-%EC%A0%84%EC%86%A1-%EC%BD%94%EB%93%9C
