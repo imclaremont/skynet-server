@@ -195,7 +195,7 @@ flaskClient.on('error', (err) => {
 function mqtt_message_handler(topic, message) {
     const topic_arr = topic.split('/');
 
-    // OneDrone으로부터 온 메시지 처리 로직 추가 (MQTT 토픽별로 분류해 처리)
+    // OneDrone으로부터 온 json 데이터 처리 로직 추가 (MQTT 토픽별로 분류해 처리)
     if (topic === 'drone/status') {
         try {
             const parsedMessage = JSON.parse(message.toString());
