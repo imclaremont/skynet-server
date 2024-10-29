@@ -28,9 +28,17 @@ CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 
 https://claremont.tistory.com/entry/MAVLink-%EB%A9%94%EC%8B%9C%EC%A7%80-%E2%86%92-JSON-%ED%8C%8C%EC%8B%B1-%ED%9B%84-Flask-%EC%84%9C%EB%B2%84-%EC%A0%84%EC%86%A1-%EC%BD%94%EB%93%9C
 
 #### ① 드론 ID 및 상태(ARMED or DISARMED, GUIDED) - MQTT topic: 'drone/status'
+
+필드명: system_id, armed, guided, timestamp
 #### ② 경도/위도 및 고도(절대고도 = 해발고도) - MQTT topic: 'drone/position'
+
+필드명: latitude, longitude, altitude, timestamp
 #### ③ 배터리 잔량 - MQTT topic: 'drone/battery_status'
+
+필드명: battery_remaining, timestamp
 #### ④ mission_item(현재 가고 있는 목표지점을 알 수 있는지 확인하는 용도) - MQTT topic: 'drone/mission_status'
+
+필드명: mission_sequence, timestamp
 
 ### 3. Flask 서버로 전송: mqtt.connect() 부분의 '127.0.0.1'에는 실제 Flask 서버의 IP 주소를 입력
 
