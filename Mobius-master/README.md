@@ -25,7 +25,6 @@ CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 
 ### 2. OneDrone으로부터 온 JSON 데이터 처리 로직: mqtt_message_handler() 함수
 
 ### [추출할 데이터 4가지]
-https://claremont.tistory.com/entry/MAVLink-%EB%A9%94%EC%8B%9C%EC%A7%80-%E2%86%92-JSON-%ED%8C%8C%EC%8B%B1-%ED%9B%84-Flask-%EC%84%9C%EB%B2%84-%EC%A0%84%EC%86%A1-%EC%BD%94%EB%93%9C
 
 #### ① 드론 ID 및 상태(ARMED or DISARMED, GUIDED) - MQTT topic: 'drone/status'
 
