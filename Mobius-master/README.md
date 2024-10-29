@@ -22,7 +22,10 @@ CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 
 ## pxy_mqtt.js (MQTT 프록시 파일)
 ### 1. pxy_ws.js 내용과 동일 (CSE 비활성화)
 
-### 2. OneDrone으로부터 온 JSON 데이터 처리 로직: mqtt_message_handler() 함수
+### 2. flask 서버 포트 설정 (디폴트 포트 넘버는 1884)
+pxymqtt_client = mqtt.connect('mqtt://127.0.0.1:1884') 부분 필요 시 각색 필요 ('mqtt://mqtt_broker ip:mqtt_port number')
+
+### 3. OneDrone으로부터 온 JSON 데이터 처리 로직: mqtt_message_handler() 함수
 
 ### [추출할 데이터 4가지]
 
