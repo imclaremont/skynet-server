@@ -82,21 +82,21 @@ flask와 mobius간의 통신을 확인하는 과정에서 sitl 연결이 없으�
 따라서 아래의 코드는 직접 테스트용 json 데이터를 만들어 flask 서버로 보내는 코드이다
 
 const mqtt = require('mqtt');
-const client = mqtt.connect('mqtt://localhost:1883');
+const client = mqtt.connect('mqtt://localhost:1884');
 
 client.on('connect', () => {
     console.log('Connected to MQTT broker');
 
     // 테스트용 JSON 데이터
-    const testData = {
-        status: "test",
-        latitude: 37.5665,
-        longitude: 126.9780,
-        altitude: 150
+    const testJsonData = {
+        system_id: 1,
+        armed: true,
+        guided: false,
+        timestamp: Date.now()  // 현재 시간을 타임스탬프로 설정
     };
 
     // 'drone/status' 주제로 Flask 서버에 테스트 데이터 전송
-    client.publish('drone/status', JSON.stringify(testData), (error) => {
+    client.publish('drone/status', JSON.stringify(testJsonData), (error) => {
         if (error) {
             console.error('Error publishing test data:', error);
         } else {
