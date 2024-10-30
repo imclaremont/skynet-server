@@ -1,5 +1,5 @@
 # 시나리오
-## 프로토콜) SITL과 OneDrone: UDP / 나머지 전부: MQTT 프로토콜
+## 프로토콜) SITL과 OneDrone: UDP, 나머지 전부: MQTT 프로토콜
 * SITL(ArduPilot): 드론의 상태를 MAVLink 메시지 데이터 타입으로 OneDrone에 전송
 * OneDrone: MAVLink 메시지를 수신하고, 이를 JSON 형식으로 변환한 후 MQTT 메시지로 mobius 서버에 발행
 * mobius 서버: OneDrone으로부터 수신한 데이터 중 필요한 데이터를 추출해 flask 서버에 JSON 데이터 형식으로 발행, 필요한 경우에는 MySQL에 저장
