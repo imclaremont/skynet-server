@@ -1,7 +1,7 @@
 ## mobius.js (mobius 서버 실행 명령어: node mobius.js)
 your_MySQL_password에 본인의 MySQL pwd로 수정 필요
 
-※ sitl 없이 mobius 서버와 flask 서버 간의 통신 테스트 코드 맨 아래에 주석처리 해두었습니다. 필요하시면 사용하시길!
+※ sitl 없이 mobius 서버와 flask 서버 간의 통신 테스트 코드 맨 아래에 주석처리 해두었습니다. 필요하시다면 사용하세요!
 
 ## app.js (main 역할을 수행하는 파일)
 모든 RESTful method에 비어있었던 경로값을 '/default'로 설정 
