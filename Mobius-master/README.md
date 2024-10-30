@@ -63,5 +63,5 @@ mosquitto_pub -h localhost -t /mytopic/1 -m "Hello MQTT test"
 
 ---------------------------------------------------
 
-## SITL(ArduPilot) 연결
+## OneDrone 연결
 포트번호: 1883
