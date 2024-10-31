@@ -6,7 +6,7 @@
 * flask 서버: mobius로부터 수신한 데이터를 경로 탐색 알고리즘에 사용하고, SITL(ArduPilot)에 명령
 
 ## 전체 시스템 구조도
-<img src="https://github.com/user-attachments/assets/77439eac-6737-4c6f-8770-8e43c1038651" width="500"/>
+<img src="https://github.com/user-attachments/assets/77439eac-6737-4c6f-8770-8e43c1038651" width="700"/>
 
 ## (참고) Mobius-Broker SW Architecture
 <div align="center">
