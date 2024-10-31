@@ -57,3 +57,11 @@ mosquitto_pub -h localhost -t /mytopic/1 -m "Hello MQTT test"
 
 ## OneDrone 연결
 포트번호: 1883
+
+---------------------------------------------------
+
+
+## (참고) Mobius-Broker SW Architecture
+<div align="center">
+<img src="https://user-images.githubusercontent.com/29790334/28245393-a1159d5e-6a40-11e7-8948-4262bf29c371.png" width="500"/>
+</div>
