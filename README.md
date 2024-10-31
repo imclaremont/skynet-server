@@ -5,6 +5,9 @@
 * mobius 서버: OneDrone으로부터 수신한 데이터 중 필요한 데이터를 추출해 flask 서버에 JSON 데이터 형식으로 발행, 필요한 경우에는 MySQL에 저장
 * flask 서버: mobius로부터 수신한 데이터를 경로 탐색 알고리즘에 사용하고, SITL(ArduPilot)에 명령
 
+## 전체 시스템 구조도
+<img src="https://github.com/user-attachments/assets/77439eac-6737-4c6f-8770-8e43c1038651" width="500"/>
+
 ## (참고) Mobius-Broker SW Architecture
 <div align="center">
 <img src="https://user-images.githubusercontent.com/29790334/28245393-a1159d5e-6a40-11e7-8948-4262bf29c371.png" width="500"/>
