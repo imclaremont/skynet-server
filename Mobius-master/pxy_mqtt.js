@@ -182,20 +182,51 @@ function reg_req_sub() {
     // console.log('subscribe reg_req_topic as ' + reg_req_topic);
 }
 
+
+
 const flaskClient = mqtt.connect('mqtt://127.0.0.1:1884'); // Flask 서버 IP 및 포트 입력
 
 flaskClient.on('connect', () => {
     console.log('Connected to Flask server');
+    // Flask 서버로부터 오는 데이터 구독
+    // #: 와일드카드
+    flaskClient.subscribe('drone/#', (err) => {
+        if (!err) {
+            console.log('Mobius subscribed to drone/#');
+        } else {
+            console.error('Mobius has subscription error:', err);
+        }
+    });
 });
 
 flaskClient.on('error', (err) => {
     console.error('Error connecting to Flask server:', err);
 });
 
+// Flask 서버로부터 오는 JSON 데이터 수신 및 처리 코드
+flaskClient.on('message', (topic, message) => {
+    try {
+        const parsedMessage = JSON.parse(message.toString());
+        console.log(`Received message from Flask server on topic ${topic}:`, parsedMessage);
+
+        if (topic === 'drone/#') {
+            console.log('Handling response for drone/#:', parsedMessage);
+            // 필요한 로직을 추가하여 Flask로부터 온 데이터를 처리
+        } else if (topic === 'drone/#') {
+            console.log('Handling response for pathfinding result:', parsedMessage);
+            // 필요한 로직을 추가하여 Flask로부터 온 데이터를 처리
+        } else {
+            console.warn(`Unrecognized topic from Flask server: ${topic}`);
+        }
+    } catch (error) {
+        console.error('Error processing message from Flask server:', error.message);
+    }
+});
+
 function mqtt_message_handler(topic, message) {
     const topic_arr = topic.split('/');
 
-    // OneDrone으로부터 온 json 데이터 처리 로직 추가 (MQTT 토픽별로 분류해 처리)
+    // OneDrone으로부터 온 JSON 데이터 송신 로직 추가 (MQTT 토픽별로 분류해 처리)
     if (topic === 'drone/status') {
         try {
             const parsedMessage = JSON.parse(message.toString());
@@ -420,6 +451,8 @@ function mqtt_message_handler(topic, message) {
         NOPRINT==='true'?NOPRINT='true':console.log('topic(' + topic + ') is not supported');
     }
 }
+
+
 
 function cache_ttl_manager() {
     for(var idx in message_cache) {
