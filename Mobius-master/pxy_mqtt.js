@@ -190,9 +190,9 @@ flaskClient.on('connect', () => {
     console.log('Connected to Flask server');
     // Flask 서버로부터 오는 데이터 구독
     // #: 와일드카드
-    flaskClient.subscribe('drone/#', (err) => {
+    flaskClient.subscribe('drone/commands', (err) => {
         if (!err) {
-            console.log('Mobius subscribed to drone/#');
+            console.log('Mobius subscribed to drone/commands');
         } else {
             console.error('Mobius has subscription error:', err);
         }
@@ -209,12 +209,10 @@ flaskClient.on('message', (topic, message) => {
         const parsedMessage = JSON.parse(message.toString());
         console.log(`Received message from Flask server on topic ${topic}:`, parsedMessage);
 
-        if (topic === 'drone/#') { // 토픽명 수정 예정
-            console.log('Handling response for drone/#:', parsedMessage);
+        if (topic === 'drone/commands') {
+            console.log('Handling response for drone/commands:', parsedMessage);
             // 필요한 로직을 추가하여 Flask로부터 온 데이터를 처리
-        } else if (topic === 'drone/#') { // 토픽명 수정 예정
-            console.log('Handling response for drone/#:', parsedMessage);
-            // 필요한 로직을 추가하여 Flask로부터 온 데이터를 처리
+            
         } else {
             console.warn(`Unrecognized topic from Flask server: ${topic}`);
         }
