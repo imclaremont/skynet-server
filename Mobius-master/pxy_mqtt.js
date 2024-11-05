@@ -5,7 +5,7 @@
  * 1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
  * 3. The name of the author may not be used to endorse or promote products derived from this software without specific prior written permission.
- * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 /**
@@ -186,10 +186,10 @@ function reg_req_sub() {
 
 const flaskClient = mqtt.connect('mqtt://127.0.0.1:1884'); // Flask 서버 IP 및 포트 입력
 
+// Flask 서버로부터 오는 데이터 구독
 flaskClient.on('connect', () => {
     console.log('Connected to Flask server');
-    // Flask 서버로부터 오는 데이터 구독
-    // #: 와일드카드
+
     flaskClient.subscribe('drone/commands', (err) => {
         if (!err) {
             console.log('Mobius subscribed to drone/commands');
@@ -207,14 +207,16 @@ flaskClient.on('error', (err) => {
 flaskClient.on('message', (topic, message) => {
     try {
         const parsedMessage = JSON.parse(message.toString());
-        console.log(`Received message from Flask server on topic ${topic}:`, parsedMessage);
+        console.log('Received message from Flask server on topic ${topic}:', parsedMessage);
 
         if (topic === 'drone/commands') {
             console.log('Handling response for drone/commands:', parsedMessage);
             // 필요한 로직을 추가하여 Flask로부터 온 데이터를 처리
+
+
             
         } else {
-            console.warn(`Unrecognized topic from Flask server: ${topic}`);
+            console.warn('Unrecognized topic from Flask server: ${topic}');
         }
     } catch (error) {
         console.error('Error processing message from Flask server:', error.message);
@@ -306,7 +308,7 @@ function mqtt_message_handler(topic, message) {
         }
     } 
     else {
-        console.warn(`Unrecognized topic: ${topic}`);
+        console.warn('Unrecognized topic: ${topic}');
     }
 
     // 기존 메시지 처리 로직
