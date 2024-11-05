@@ -27,6 +27,20 @@ pxymqtt_client = mqtt.connect('mqtt://127.0.0.1:<b>1884</b>') 부분 필요 시 
 
 ### 3. Flask 서버로부터 온 JSON 데이터 처리 로직: 2번의 Flask 서버 포트 설정 부분과 4번의 mqtt_message_handler() 함수 부분 사이에 작성
 
+### [수신할 데이터 ㅁ가지]
+
+#### ① ㅇㅇㅇ - MQTT topic: 'ㅇㅇㅇ'
+
+필드명: ㅇㅇㅇ
+
+#### ② ㅇㅇㅇ - MQTT topic: 'ㅇㅇㅇ'
+
+필드명: ㅇㅇㅇ
+
+#### ③ ㅇㅇㅇ - MQTT topic: 'ㅇㅇㅇ'
+
+필드명: ㅇㅇㅇ
+
 ### 4. OneDrone으로부터 온 JSON 데이터 처리 로직: mqtt_message_handler() 함수
 
 ### [추출할 데이터 4가지]
