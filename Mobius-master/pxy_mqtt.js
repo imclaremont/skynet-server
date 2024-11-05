@@ -213,7 +213,7 @@ flaskClient.on('message', (topic, message) => {
             console.log('Handling response for drone/#:', parsedMessage);
             // 필요한 로직을 추가하여 Flask로부터 온 데이터를 처리
         } else if (topic === 'drone/#') { // 토픽명 수정 예정
-            console.log('Handling response for pathfinding result:', parsedMessage);
+            console.log('Handling response for drone/#:', parsedMessage);
             // 필요한 로직을 추가하여 Flask로부터 온 데이터를 처리
         } else {
             console.warn(`Unrecognized topic from Flask server: ${topic}`);
