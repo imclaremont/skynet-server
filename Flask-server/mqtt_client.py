@@ -235,6 +235,6 @@ def start_mqtt_client():
     print("\n\nStart MQTT Client\n\n")
     client.on_connect = on_connect
     client.on_message = on_message  
-    client.connect(MQTT_BROKER)
+    client.connect(MQTT_BROKER, port=1884)
     client.loop_start()
     
