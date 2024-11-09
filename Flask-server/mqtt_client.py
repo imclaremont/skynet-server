@@ -9,6 +9,7 @@ from pymavlink import mavutil
 
 # MQTT 브로커 정보
 MQTT_BROKER = '127.0.0.1'
+MQTT_PORT = 1883
 # SUB_TOPICS = [
 #     'drone/status',
 #     'drone/position',
@@ -235,6 +236,6 @@ def start_mqtt_client():
     print("\n\nStart MQTT Client\n\n")
     client.on_connect = on_connect
     client.on_message = on_message  
-    client.connect(MQTT_BROKER, port=1884)
+    client.connect(MQTT_BROKER, MQTT_PORT)
     client.loop_start()
     
