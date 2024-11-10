@@ -28,6 +28,9 @@
 
 ## 라이브러리 설치
 pip install paho-mqtt
+
 pip install pymavlink
+
 pip install requests
+
 pip install python-dotenv
