@@ -9,7 +9,7 @@ from pymavlink import mavutil
 
 # MQTT 브로커 정보
 MQTT_BROKER = '127.0.0.1'
-MQTT_PORT = 1883
+MQTT_PORT = 1884
 # SUB_TOPICS = [
 #     'drone/status',
 #     'drone/position',
