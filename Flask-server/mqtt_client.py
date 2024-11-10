@@ -9,13 +9,6 @@ from pymavlink import mavutil
 
 # MQTT 브로커 정보
 MQTT_BROKER = '127.0.0.1'
-MQTT_PORT = 1884
-# SUB_TOPICS = [
-#     'drone/status',
-#     'drone/position',
-#     'drone/battery_status',
-#     'drone/mission_status'
-# ]
 SUB_TOPIC = 'drone/status'
 PUB_TOPIC = 'drone/commands'
 
@@ -38,8 +31,7 @@ client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 def on_connect(client, userdata, flags, reason_code, properties):
     if reason_code == 0:
         print("\n\nSuccess Connect!\n\n")
-        for topic in SUB_TOPICS:
-            client.subscribe(topic)  # 각 토픽을 구독합니다.
+        client.subscribe(SUB_TOPIC)  # 토픽을 구독합니다.
 
     if reason_code > 0:
         print(f'\n\nConnected with result code {reason_code}\n\n')
@@ -48,37 +40,40 @@ def on_connect(client, userdata, flags, reason_code, properties):
 # 메시지를 수신할 때 호출되는 콜백 함수 수정
 def on_message(client, userdata, message):
     topic = message.topic  # 수신된 메시지의 토픽
-    payload = str(message.payload.decode("utf-8"))
+    payload = message.payload  
 
     print(f"\nReceived message on topic '{topic}': {payload}\n")
     
     # 각 토픽에 따라 get_drone_status 호출
-    get_drone_status(topic, payload)
+    get_drone_status(payload)
 
 
 # 수신받은 드론 정보를 저장
-def get_drone_status(topic, payload):
-    data = json.loads(payload)  # JSON 형식으로 파싱
+def get_drone_status(payload):
+    # 바이너리 메시지를 디코딩하여 MAVLink 메시지 객체 생성
+    msg = decode_mavlink_message(bytearray(payload))
 
+    print(f"type of msg : {type(msg)}\ndecoded msg : {msg}")
+    # 메시지 유형에 따라 정보 저장
+    if isinstance(msg, mavlink2.MAVLink_heartbeat_message):
+        drone_info['drone_id'] = msg.id  # system_id는 heartbeat 메시지에서 직접 접근
+        drone_info['isArmed'] = (msg.base_mode & mavutil.mavlink.MAV_MODE_FLAG_SAFETY_ARMED) != 0
+        drone_info['isGuided'] = (msg.base_mode & mavutil.mavlink.MAV_MODE_FLAG_GUIDED_ENABLED) != 0
 
-    # 토픽에 따라 정보 저장
-    if topic == 'drone/status':
-        drone_info['drone_id'] = data['system_id']
-        drone_info['isArmed'] = data['armed']
-        drone_info['isGuided'] = data['guided']
+    elif isinstance(msg, mavlink2.MAVLink_global_position_int_message):
+        drone_info['latitude'] = msg.lat / 1e7  # 위도
+        drone_info['longitude'] = msg.lon / 1e7  # 경도
+        drone_info['altitude'] = msg.alt / 1000.0  # 고도
 
-    elif topic == 'drone/position':
-        drone_info['latitude'] = data['latitude']
-        drone_info['longitude'] = data['longitude']
-        drone_info['altitude'] = data['altitude']
+    elif isinstance(msg, mavlink2.MAVLink_battery_status_message):
+        drone_info['battery_status'] = msg.battery_remaining
 
+    elif isinstance(msg, mavlink2.MAVLink_mission_current_message):
+        drone_info['mission_status'] = msg.seq  # 현재 미션 시퀀스
 
-    elif topic == 'drone/battery_status':
-        drone_info['battery_status'] = data['battery_remaining']
-
-    elif topic == 'drone/mission_status':
-        drone_info['mission_status'] = data['mission_sequence']
-
+    print(f"All drone_info init check : \n")
+    for value in drone_info.values():
+        print(f"{value}  ")
 
     # 모든 정보가 수집된 경우에만 드론 객체 생성
     if all(value is not None for value in drone_info.values()):
@@ -97,6 +92,7 @@ def get_drone_status(topic, payload):
                 
         # 드론 정보 초기화
         reset_drone_info()
+
 
 def reset_drone_info():
     global drone_info
@@ -122,6 +118,26 @@ def decode_mavlink_message(mav_msg_byte):
         return msg
     except Exception as e:
         return f"Failed to decode message: {e}"
+
+# # MAVLink 메시지 디코딩 함수
+# def decode_mavlink_message(mav_msg_byte):
+
+#     mav = mavlink2.MAVLink(None)  # 연결 없이 MAVLink 객체 생성
+
+#     # MAVLink 메시지의 헤더를 디코드 (6바이트)
+#     header_format = '<BBBBBB'  # MAVLink 헤더 구조
+#     header_size = struct.calcsize(header_format)
+
+#     # 헤더와 페이로드 분리
+#     header = mav_msg_byte[:header_size]
+#     message_id, system_id, component_id, mav_msg_byte_length, msg_sequence, system_time = struct.unpack(header_format, header)
+
+#     try:
+#         # 메시지 파싱
+#         msg = mav.decode(mav_msg_byte)
+#         return system_id, msg
+#     except Exception as e:
+#         return f"Failed to decode message: {e}"
 
 
 # 제어 명령을 발행하는 함수
@@ -211,7 +227,7 @@ def publish_control_command(command_data):
     print(f"\nmav_msg : \n{mav_msg}")
 
     if mav_msg:
-        mavlink_msg_bytes = mav_msg.pack(mavutil.mavlink.MAVLink('', 2, 1))
+        mavlink_msg_bytes = mav_msg.pack(mavutil.mavlink.MAVLink('', 2, sys_id))    # 파라미터 : 연결객체, MAVLink Version, system_id
         client.publish(PUB_TOPIC, mavlink_msg_bytes)
 
         # # 비트 문자열 변환
@@ -236,6 +252,6 @@ def start_mqtt_client():
     print("\n\nStart MQTT Client\n\n")
     client.on_connect = on_connect
     client.on_message = on_message  
-    client.connect(MQTT_BROKER, MQTT_PORT)
+    client.connect(MQTT_BROKER)
     client.loop_start()
     
