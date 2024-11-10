@@ -1,3 +1,5 @@
+// pxy_mqtt.js
+
 /**
  * Copyright (c) 2018, KETI
  * All rights reserved.
@@ -51,7 +53,7 @@ var events = require('events');
 var mqtt_app = express();
 
 
-var usemqttcbhost = 'localhost'; // pxymqtt to mobius
+var usemqttcbhost = '127.0.0.1'; // pxymqtt to mobius
 
 
 
@@ -203,23 +205,33 @@ flaskClient.on('error', (err) => {
     console.error('Error connecting to Flask server:', err);
 });
 
-// Flask 서버로부터 오는 JSON 데이터 수신 및 처리 코드
+// Flask 서버로부터 오는 데이터 수신 및 처리 코드
 flaskClient.on('message', (topic, message) => {
-    try {
+    try { // JSON 형식의 데이터를 처리
         const parsedMessage = JSON.parse(message.toString());
-        console.log('Received message from Flask server on topic ${topic}:', parsedMessage);
+        console.log(`Flask 서버에서 받은 JSON 메시지, 토픽 ${topic}:`, parsedMessage);
 
         if (topic === 'drone/commands') {
-            console.log('Handling response for drone/commands:', parsedMessage);
-            // 필요한 로직을 추가하여 Flask로부터 온 데이터를 처리
+            console.log('drone/commands 응답 처리:', parsedMessage);
+            // Flask로부터 온 JSON 데이터 처리 로직 추가
 
 
-            
+
         } else {
-            console.warn('Unrecognized topic from Flask server: ${topic}');
+            console.warn(`Flask 서버에서 받은 알 수 없는 JSON 토픽: ${topic}`);
         }
-    } catch (error) {
-        console.error('Error processing message from Flask server:', error.message);
+    } catch (error) { // JSON 형식이 아닌 데이터 처리 (예: MAVLink 바이너리 데이터)
+        console.warn('Flask 서버에서 받은 MAVLink 바이너리 데이터, 토픽:', topic);
+        
+        if (topic === 'drone/commands') {
+            console.log('drone/commands 응답 처리');
+            // Flask로부터 온 MAVLink 바이너리 데이터 처리 로직 추가
+
+
+
+        } else {
+            console.warn(`Flask 서버에서 받은 알 수 없는 MAVLink 바이너리 데이터, 토픽: ${topic}`);
+        }
     }
 });
 
