@@ -23,3 +23,11 @@
 
 ## + MAVLink 메시지를 드론에게 전송한 후, 드론으로부터 오는 응답 처리
 드론이 경로를 수신하고 명령을 수행했는지 확인하기 위해 `ACK` or 상태 메시지를 받을 수 있도록 구성
+
+--------------------------------------------------------------------------------
+
+## 라이브러리 설치
+pip install paho-mqtt
+pip install pymavlink
+pip install requests
+pip install python-dotenv
