@@ -238,89 +238,23 @@ flaskClient.on('message', (topic, message) => {
 function mqtt_message_handler(topic, message) {
     const topic_arr = topic.split('/');
 
-    // OneDrone으로부터 온 JSON 데이터 송신 로직 추가 (MQTT 토픽별로 분류해 처리)
-    if (topic === 'drone/status') {
+    // OneDrone에서 Mobius로 전송되는 MAVLink 바이너리 메시지 처리
+    if (topic === '/Mobius/[GCS이름]/Drone_Data/[드론이름]/[sortie이름]/orig') {
         try {
-            const parsedMessage = JSON.parse(message.toString());
-            console.log('Successfully received HEARTBEAT message from SITL:', parsedMessage);
-            
-            // 필요한 데이터만 추출
-            const jsonData = { 
-                system_id: parsedMessage.system_id,
-                armed: parsedMessage.armed,
-                guided: parsedMessage.guided,
-                timestamp: parsedMessage.timestamp
-            };
-            
-            // MQTT를 통해 JSON 데이터를 Flask 서버로 전송
-            flaskClient.publish('drone/status', JSON.stringify(jsonData));
-            console.log('Sent HEARTBEAT data to Flask server');
-            
-        } catch (error) {
-            console.error('Error processing HEARTBEAT message:', error.message);
-        }
-    } 
-    else if (topic === 'drone/position') {
-        try {
-            const parsedMessage = JSON.parse(message.toString());
-            console.log('Successfully received GLOBAL_POSITION_INT message from SITL:', parsedMessage);
-            
-            // 필요한 데이터만 추출
-            const jsonData = { 
-                latitude: parsedMessage.latitude,
-                longitude: parsedMessage.longitude,
-                altitude: parsedMessage.altitude,
-                timestamp: parsedMessage.timestamp
-            };
-            
-            // MQTT를 통해 JSON 데이터를 Flask 서버로 전송
-            flaskClient.publish('drone/position', JSON.stringify(jsonData));
-            console.log('Sent GLOBAL_POSITION_INT data to Flask server');
+            // MAVLink 메시지 파싱
+            const mavParser = new mavlink(1, 1);
+            mavParser.parseBuffer(message);
 
-        } catch (error) {
-            console.error('Error processing GLOBAL_POSITION_INT message:', error.message);
-        }
-    } 
-    else if (topic === 'drone/battery_status') {
-        try {
-            const parsedMessage = JSON.parse(message.toString());
-            console.log('Successfully received SYS_STATUS message from SITL:', parsedMessage);
-            
-            // 필요한 데이터만 추출
-            const jsonData = {
-                battery_remaining: parsedMessage.battery_remaining,
-                timestamp: parsedMessage.timestamp
-            };
+            mavParser.on('message', (mavMessage) => {
+                console.log('Received MAVLink message from OneDrone:', mavMessage);
 
-            // MQTT를 통해 JSON 데이터를 Flask 서버로 전송
-            flaskClient.publish('drone/battery_status', JSON.stringify(jsonData));
-            console.log('Sent SYS_STATUS data to Flask server');
-
+                // JSON으로 변환된 메시지를 Flask 서버에 전송
+                flaskClient.publish('drone/status', JSON.stringify(mavMessage));
+                console.log('Sent MAVLink data as JSON to Flask server on topic drone/status');
+            });
         } catch (error) {
-            console.error('Error processing SYS_STATUS message:', error.message);
+            console.error('Error processing MAVLink message from OneDrone:', error);
         }
-    } 
-    else if (topic === 'drone/mission_status') {
-        try {
-            const parsedMessage = JSON.parse(message.toString());
-            console.log('Successfully received MISSION_CURRENT message from SITL:', parsedMessage);
-            
-            // 필요한 데이터만 추출
-            const jsonData = {
-                mission_sequence: parsedMessage.mission_sequence,
-                timestamp: parsedMessage.timestamp
-            };
-            
-            // MQTT를 통해 JSON 데이터를 Flask 서버로 전송
-            flaskClient.publish('drone/mission_status', JSON.stringify(jsonData));
-            console.log('Sent MISSION_CURRENT data to Flask server');
-
-        } catch (error) {
-            console.error('Error processing MISSION_CURRENT message:', error.message);
-        }
-    } 
-    else {
-        console.warn('Unrecognized topic: ${topic}');
     }
 
     // 기존 메시지 처리 로직
