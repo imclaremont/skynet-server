@@ -1,3 +1,5 @@
+// mobius.js
+
 /**
  * Copyright (c) 2018, KETI
  * All rights reserved.
@@ -22,7 +24,7 @@ try {
 }
 catch (e) {
     conf.csebaseport = "7579";
-    conf.dbpass = "your_MySQL_password";
+    conf.dbpass = "your_MySQL_pwd";
     fs.writeFileSync('conf.json', JSON.stringify(conf, null, 4), 'utf8');
 }
 
@@ -34,7 +36,7 @@ global.usecsebase           = 'Mobius';
 global.usecseid             = '/Mobius2';
 global.usecsebaseport       = conf.csebaseport;
 
-global.usedbhost            = 'localhost';
+global.usedbhost            = '127.0.0.1';
 global.usedbpass            = conf.dbpass;
 
 
@@ -47,7 +49,7 @@ global.use_hit_man_port     = '7594';
 
 global.usetsagentport       = '7582';
 
-global.use_mqtt_broker      = 'localhost'; // mqttbroker for mobius
+global.use_mqtt_broker      = '127.0.0.1'; // mqttbroker for mobius
 
 global.use_secure           = 'disable';
 global.use_mqtt_port        = '1883';
@@ -74,34 +76,3 @@ global.useCert = 'disable';
 
 // CSE core
 require('./app');
-
-
-
-/*
-flask와 mobius간의 통신을 확인하는 과정에서 sitl 연결이 없으면 드론으로부터 들어오는 데이터를 publish 할 수가 없다.
-따라서 아래의 코드는 직접 테스트용 json 데이터를 만들어 flask 서버로 보내는 코드이다
-
-const mqtt = require('mqtt');
-const client = mqtt.connect('mqtt://localhost:1884');
-
-client.on('connect', () => {
-    console.log('Connected to MQTT broker');
-
-    // 테스트용 JSON 데이터
-    const testJsonData = {
-        system_id: 1,
-        armed: true,
-        guided: false,
-        timestamp: Date.now()  // 현재 시간을 타임스탬프로 설정
-    };
-
-    // 'drone/status' 주제로 Flask 서버에 테스트 데이터 전송
-    client.publish('drone/status', JSON.stringify(testJsonData), (error) => {
-        if (error) {
-            console.error('Error publishing test data:', error);
-        } else {
-            console.log('Test data published to drone/status');
-        }
-    });
-});
-*/
