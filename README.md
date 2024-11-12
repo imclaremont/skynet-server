@@ -13,5 +13,7 @@
 * Mobius to OneDrone topic: 미정
   
 <b>Flask로부터 구독한 MAVLink 바이너리 메시지와 JSON을 Mobius에서 그대로 OneDrone으로 발행</b>
+
 ① ARM, SET_MODE: MAVLink 바이너리 메시지 타입
+
 ② 나머지 데이터들(미션 명령): JSON 타입
