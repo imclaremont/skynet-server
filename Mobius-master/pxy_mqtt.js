@@ -194,7 +194,7 @@ function mqtt_message_handler(topic, message) {
 
 
     /* 1. OneDrone -> Mobius -> Flask */
-    // OneDrone에서 Mobius로 전송되는 MAVLink 메시지 처리
+    // OneDrone에서 Mobius로 발행되는 MAVLink 메시지 처리
     if (topic === '/Mobius/[GCS이름]/Drone_Data/[드론이름]/[sortie이름]/orig') {
         try {
             // MAVLink 메시지 파싱
@@ -204,7 +204,7 @@ function mqtt_message_handler(topic, message) {
             mavParser.on('message', (mavMessage) => {
                 console.log('Received MAVLink message from OneDrone:', mavMessage);
 
-                // JS 객체를 JSON으로 변환하여 Flask 서버에 전송
+                // JS 객체를 JSON으로 파싱하여 Flask 서버에 전송
                 const mavMessageJson = JSON.stringify(mavMessage);
                 flask_client.publish('drone/status', mavMessageJson, (err) => {
                     if (!err) {
@@ -219,7 +219,8 @@ function mqtt_message_handler(topic, message) {
         }
     }
 
-    // Mobius -> Flask 로 더미 데이터 생성 (JSON 형식으로 전송)
+    // 아래는 더미 데이터 테스트 코드입니다
+    // Mobius -> Flask 로 더미 데이터를 생성 (더미 데이터는 객체 타입이며 JSON 타입으로 파싱 후 발행)
     // 주기적으로 더미 데이터를 전송 (3초마다)
     setInterval(() => {
         const heartbeatMessage = { // 1. HEARTBEAT 메시지
@@ -257,7 +258,7 @@ function mqtt_message_handler(topic, message) {
             }
         };
 
-        // 각 더미 메시지를 JSON 형식으로 변환한 후 Flask 서버로 전송
+        // 각 더미 메시지를 JSON 형식으로 파싱한 후 Flask 서버로 발행
         const mavMessages = [heartbeatMessage, globalPositionMessage, batteryStatusMessage, missionCurrentMessage];
         mavMessages.forEach(mavMessage => {
             const mavMessageJson = JSON.stringify(mavMessage);
@@ -293,7 +294,7 @@ function mqtt_message_handler(topic, message) {
 
     // Flask 서버에서 오는 데이터 수신 및 처리 코드
     flask_client.on('message', (topic, message) => {
-        try { // JSON 형식의 데이터를 처리(미션 명령)
+        try { // JSON 타입의 데이터를 처리(미션 명령)
             const parsedMessage = JSON.parse(message.toString());
             console.log(`Flask 서버에서 받은 JSON 메시지, 토픽 ${topic}:`, parsedMessage);
 
@@ -303,16 +304,16 @@ function mqtt_message_handler(topic, message) {
                 // OneDrone으로 전달할 토픽 정의 (추후 실제 토픽으로 변경 필요)
                 const oneDroneTopic = '--토픽 미정--';
 
-                // Flask에서 받은 JSON 메시지를 그대로 OneDrone으로 전송
+                // Flask에서 받은 JSON 데이터를 그대로 OneDrone으로 전송
                 pxymqtt_client.publish(oneDroneTopic, message, (err) => {
                     if (!err) {
-                        console.log(`Flask에서 받은 데이터를 OneDrone으로 전송 성공, 토픽 ${oneDroneTopic}`);
+                        console.log(`Flask에서 받은 JSON 데이터를 OneDrone으로 전송 성공, 토픽 ${oneDroneTopic}`);
                     } else {
-                        console.error(`OneDrone으로 데이터 전송 실패, 토픽 ${oneDroneTopic}`, err);
+                        console.error(`OneDrone으로 JSON 데이터 전송 실패, 토픽 ${oneDroneTopic}`, err);
                     }
                 });
             } else {
-                console.warn(`Flask 서버에서 받은 알 수 없는 JSON 토픽: ${topic}`);
+                console.warn(`Flask 서버에서 받은 알 수 없는 JSON 데이터, 토픽: ${topic}`);
             }
         } catch (error) {
             console.warn('Flask 서버에서 받은 MAVLink 바이너리 데이터, 토픽:', topic);
@@ -332,7 +333,7 @@ function mqtt_message_handler(topic, message) {
                     }
                 });
             } else {
-                console.warn(`Flask 서버에서 받은 알 수 없는 MAVLink 바이너리 데이터, 토픽: ${topic}`);
+                console.warn(`Flask 서버에서 받은 알 수 없는 MAVLink 바이너리 메시지 데이터, 토픽: ${topic}`);
             }
         }
     });
