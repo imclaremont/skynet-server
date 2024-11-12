@@ -29,7 +29,7 @@ OneDrone -> Mobius -> Flask: OneDrone으로부터 구독한 MAVLink 바이너리
 Flask -> Mobius -> OneDrone: Flask로부터 구독한 MAVLink 바이너리 메시지와 JSON을 Mobius에서 그대로 OneDrone으로 발행
 
 ## OneDrone 연결
-포트번호: 1883 (MQTT 기본 비보안 포트)
+포트번호: 1883 (MQTT 비보안 기본 포트)
 
 ---------------------------------------------------
 
