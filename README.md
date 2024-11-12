@@ -1,14 +1,13 @@
 ## 전체 시스템 구조도
 <img src="https://github.com/user-attachments/assets/77439eac-6737-4c6f-8770-8e43c1038651" width="700"/>
 
-## 전체 시스템 흐름
-1. OneDrone -> Mobius -> Flask
+## OneDrone -> Mobius -> Flask
 * OneDrone to Mobius topic: /Mobius/[GCS이름]/Drone_Data/[드론이름]/[sortie이름]/orig
 * Mobius to Flask topic: drone/status
   
 <b>OneDrone으로부터 구독한 MAVLink 바이너리 메시지를 Mobius에서 JSON으로 변환해 Flask로 발행</b>
 
-2. Flask -> Mobius -> OneDrone
+## Flask -> Mobius -> OneDrone
 * Flask to Mobius topic: drone/commands
 * Mobius to OneDrone topic: 미정
   
