@@ -301,7 +301,7 @@ function mqtt_message_handler(topic, message) {
                 console.log('drone/commands 응답 처리:', parsedMessage);
 
                 // OneDrone으로 전달할 토픽 정의 (추후 실제 토픽으로 변경 필요)
-                const oneDroneTopic = '토픽 미정';
+                const oneDroneTopic = '--토픽 미정--';
 
                 // Flask에서 받은 JSON 메시지를 그대로 OneDrone으로 전송
                 pxymqtt_client.publish(oneDroneTopic, message, (err) => {
@@ -321,7 +321,7 @@ function mqtt_message_handler(topic, message) {
                 console.log('drone/commands 응답 처리');
 
                 // OneDrone으로 전달할 토픽 정의 (추후 실제 토픽으로 변경 필요)
-                const oneDroneTopic = '토픽 미정';
+                const oneDroneTopic = '--토픽 미정--';
 
                 // Flask에서 받은 MAVLink 바이너리 데이터를 그대로 OneDrone으로 전송
                 pxymqtt_client.publish(oneDroneTopic, message, (err) => {
