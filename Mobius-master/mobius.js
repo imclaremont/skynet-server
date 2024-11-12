@@ -24,7 +24,7 @@ try {
 }
 catch (e) {
     conf.csebaseport = "7579";
-    conf.dbpass = "your_MySQL_pwd";
+    conf.dbpass = "your_MySQL_password";
     fs.writeFileSync('conf.json', JSON.stringify(conf, null, 4), 'utf8');
 }
 
