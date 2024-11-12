@@ -18,7 +18,7 @@ node mobius.js 로 서버 실행 시, "Target CSE(localhost) is not ready" 문�
 CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 처리
 
 ## pxy_mqtt.js (MQTT 프록시 파일)
-#### 1. pxy_ws.js 내용과 동일 (CSE 비활성화)
+#### pxy_ws.js 내용과 동일 (CSE 비활성화)
 
 ### mqtt_message_handler() 함수
 
