@@ -5,7 +5,7 @@
 * OneDrone to Mobius topic: /Mobius/[GCS이름]/Drone_Data/[드론이름]/[sortie이름]/orig
 * Mobius to Flask topic: drone/status
   
-<b>OneDrone으로부터 구독한 MAVLink 바이너리 메시지를 Mobius에서 JSON으로 변환해 Flask로 발행</b>
+<b>OneDrone으로부터 구독한 MAVLink 바이너리 메시지를 Mobius에서 JSON으로 파싱해 Flask로 발행</b>
 
 ## Flask -> Mobius -> OneDrone
 * Flask to Mobius topic: drone/commands
