@@ -22,11 +22,11 @@ CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 
 
 * mqtt_message_handler() 함수에 모든 처리 로직 구현
 
-flask_client = mqtt.connect('mqtt://127.0.0.1:1884') 부분 추후 수정 필요 MQTT_BROKER_IP:MQTT_PORT_NUMBER
+1. flask_client = mqtt.connect('mqtt://127.0.0.1:1884') 부분 추후 수정 필요 MQTT_BROKER_IP:MQTT_PORT_NUMBER
 
-OneDrone -> Mobius -> Flask: OneDrone으로부터 구독한 MAVLink 바이너리 메시지를 Mobius에서 JSON으로 파싱해 Flask로 발행
+2. OneDrone -> Mobius -> Flask: OneDrone으로부터 구독한 MAVLink 바이너리 메시지를 Mobius에서 JSON으로 파싱해 Flask로 발행
 
-Flask -> Mobius -> OneDrone: Flask로부터 구독한 MAVLink 바이너리 메시지와 JSON을 Mobius에서 그대로 OneDrone으로 발행
+3. Flask -> Mobius -> OneDrone: Flask로부터 구독한 MAVLink 바이너리 메시지와 JSON을 Mobius에서 그대로 OneDrone으로 발행
 
 ## OneDrone 연결
 포트번호: 1883 (MQTT 비보안 기본 포트)
