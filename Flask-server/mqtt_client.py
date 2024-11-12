@@ -20,6 +20,7 @@ drone_info = {
     'latitude': None,
     'longitude': None,
     'altitude': None,
+    'velocity': None,
     'battery_status': None,
     'mission_status': None
 }
@@ -50,30 +51,30 @@ def on_message(client, userdata, message):
 
 # 수신받은 드론 정보를 저장
 def get_drone_status(payload):
-    # 바이너리 메시지를 디코딩하여 MAVLink 메시지 객체 생성
-    msg = decode_mavlink_message(bytearray(payload))
+    data = json.loads(payload)  # JSON 형식으로 파싱
 
-    print(f"type of msg : {type(msg)}\ndecoded msg : {msg}")
-    # 메시지 유형에 따라 정보 저장
-    if isinstance(msg, mavlink2.MAVLink_heartbeat_message):
-        drone_info['drone_id'] = msg.id  # system_id는 heartbeat 메시지에서 직접 접근
-        drone_info['isArmed'] = (msg.base_mode & mavutil.mavlink.MAV_MODE_FLAG_SAFETY_ARMED) != 0
-        drone_info['isGuided'] = (msg.base_mode & mavutil.mavlink.MAV_MODE_FLAG_GUIDED_ENABLED) != 0
+    # 데이터 유형에 따라 정보 저장
+    if data['type'] == 'HEARTBEAT':
+        drone_info['drone_id'] = data['data'].get('system_id')
+        drone_info['isArmed'] = data['data'].get('armed')
+        drone_info['isGuided'] = data['data'].get('guided')
 
-    elif isinstance(msg, mavlink2.MAVLink_global_position_int_message):
-        drone_info['latitude'] = msg.lat / 1e7  # 위도
-        drone_info['longitude'] = msg.lon / 1e7  # 경도
-        drone_info['altitude'] = msg.alt / 1000.0  # 고도
+    elif data['type'] == 'GLOBAL_POSITION_INT':
+        drone_info['latitude'] = data['data'].get('latitude')
+        drone_info['longitude'] = data['data'].get('longitude')
+        drone_info['altitude'] = data['data'].get('altitude')
 
-    elif isinstance(msg, mavlink2.MAVLink_battery_status_message):
-        drone_info['battery_status'] = msg.battery_remaining
+        # 속도 정보 저장
+        vx = data['data'].get('vx', 0)  # / 100.0  # 속도를 m/s로 변환
+        vy = data['data'].get('vy', 0)  # / 100.0
+        vz = data['data'].get('vz', 0)  # / 100.0
+        drone_info['velocity'] = [vx, vy, vz]  # 속도 리스트로 저장
 
-    elif isinstance(msg, mavlink2.MAVLink_mission_current_message):
-        drone_info['mission_status'] = msg.seq  # 현재 미션 시퀀스
+    elif data['type'] == 'BATTERY_STATUS':
+        drone_info['battery_status'] = data['data'].get('battery_remaining')
 
-    print(f"All drone_info init check : \n")
-    for value in drone_info.values():
-        print(f"{value}  ")
+    elif data['type'] == 'MISSION_CURRENT':
+        drone_info['mission_status'] = data['data'].get('mission_sequence')
 
     # 모든 정보가 수집된 경우에만 드론 객체 생성
     if all(value is not None for value in drone_info.values()):
@@ -84,12 +85,13 @@ def get_drone_status(payload):
             drone_info['latitude'],
             drone_info['longitude'],
             drone_info['altitude'],
+            drone_info['velocity'],
             drone_info['battery_status'],
             drone_info['mission_status']
         )
         print(f"\nCall update_drone\n")
         drone.update_drone_status(drone_obj)
-                
+
         # 드론 정보 초기화
         reset_drone_info()
 
@@ -103,6 +105,7 @@ def reset_drone_info():
         'latitude': None,
         'longitude': None,
         'altitude': None,
+        'velocity': None,
         'battery_status': None,
         'mission_status': None
     }
@@ -118,26 +121,6 @@ def decode_mavlink_message(mav_msg_byte):
         return msg
     except Exception as e:
         return f"Failed to decode message: {e}"
-
-# # MAVLink 메시지 디코딩 함수
-# def decode_mavlink_message(mav_msg_byte):
-
-#     mav = mavlink2.MAVLink(None)  # 연결 없이 MAVLink 객체 생성
-
-#     # MAVLink 메시지의 헤더를 디코드 (6바이트)
-#     header_format = '<BBBBBB'  # MAVLink 헤더 구조
-#     header_size = struct.calcsize(header_format)
-
-#     # 헤더와 페이로드 분리
-#     header = mav_msg_byte[:header_size]
-#     message_id, system_id, component_id, mav_msg_byte_length, msg_sequence, system_time = struct.unpack(header_format, header)
-
-#     try:
-#         # 메시지 파싱
-#         msg = mav.decode(mav_msg_byte)
-#         return system_id, msg
-#     except Exception as e:
-#         return f"Failed to decode message: {e}"
 
 
 # 제어 명령을 발행하는 함수
