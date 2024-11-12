@@ -1,8 +1,6 @@
 ## mobius.js (mobius 서버 실행 명령어: node mobius.js)
 your_MySQL_password에 본인의 MySQL pwd로 수정 필요
 
-※ sitl 없이 mobius 서버와 flask 서버 간의 통신 테스트 코드 맨 아래에 주석처리 해두었습니다. 필요하시다면 사용하세요
-
 ## app.js (main 역할을 수행하는 파일)
 모든 RESTful method에 비어있었던 경로값을 '/default'로 설정 
 
@@ -17,7 +15,7 @@ app.delete('/default', onem2mParser, (request, response) => {
 ## pxy_ws.js (WebSocket 프록시 파일)
 node mobius.js 로 서버 실행 시, "Target CSE(localhost) is not ready" 문구가 뜨는 문제 발생
 
-CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 처리로 해결
+CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 처리
 
 ## pxy_mqtt.js (MQTT 프록시 파일)
 ### 1. pxy_ws.js 내용과 동일 (CSE 비활성화)
