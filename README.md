@@ -9,12 +9,12 @@
 
 1. OneDrone -> Mobius -> Flask
 * OneDrone to Mobius topic: /Mobius/[GCS이름]/Drone_Data/[드론이름]/[sortie이름]/orig
-*Mobius to Flask topic: drone/status
+* Mobius to Flask topic: drone/status
 OneDrone으로부터 온 MAVLink 바이너리 메시지를 Mobius에서 필드값추출 없이 JSON으로만 변환해 Flask로 쏴주는 형태
 
 2. Flask -> Mobius -> OneDrone
-*Flask to Mobius topic: drone/commands
-*Mobius to OneDrone topic: 미정
+* Flask to Mobius topic: drone/commands
+* Mobius to OneDrone topic: 미정
 Flask로부터 온 데이터들을 Mobius에서 아래와 같이 처리 후 OneDrone으로 발행
 ① ARM, SET_MODE: MAVLink 바이너리 메시지 타입으로 Mobius에 오고 OneDrone으로 그대로 발행
 ② 나머지 데이터들(미션 명령): JSON 타입으로 Mobius에 오고 OneDrone으로 그대로 발행
