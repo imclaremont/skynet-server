@@ -18,47 +18,11 @@ node mobius.js 로 서버 실행 시, "Target CSE(localhost) is not ready" 문�
 CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 처리
 
 ## pxy_mqtt.js (MQTT 프록시 파일)
-### 1. pxy_ws.js 내용과 동일 (CSE 비활성화)
+#### 1. pxy_ws.js 내용과 동일 (CSE 비활성화)
 
-### 2. Flask 서버 포트 설정 (mqtt 라이브러리 사용)
+### mqtt_message_handler() 함수
+
 flask_client = mqtt.connect('mqtt://127.0.0.1:<b>1884</b>') 부분 추후 수정 필요 ('mqtt://MQTT_BROKER_IP:<b>MQTT_PORT_NUMBER</b>')
-
-### 3. Flask 서버로부터 온 JSON 데이터 처리 로직
-2번의 Flask 서버 포트 설정 부분과 4번의 mqtt_message_handler() 함수 부분 사이에 작성
-
-### [수신할 데이터 토픽 1가지] - MQTT topic: drone/commands
-
-#### ① ㅇㅇㅇ
-
-필드명: ㅇㅇㅇ
-
-#### ② ㅇㅇㅇ
-
-필드명: ㅇㅇㅇ
-
-#### ③ ㅇㅇㅇ
-
-필드명: ㅇㅇㅇ
-
-### 4. OneDrone으로부터 온 JSON 데이터 처리 로직: mqtt_message_handler() 함수
-
-### [추출할 데이터 토픽 4가지]
-
-#### ① 드론 ID 및 상태(ARMED or DISARMED, GUIDED) - MQTT topic: 'drone/status'
-
-필드명: system_id, armed, guided, timestamp(미정)
-
-#### ② 경도/위도 및 고도(절대고도 = 해발고도) - MQTT topic: 'drone/position'
-
-필드명: latitude, longitude, altitude, timestamp(미정)
-
-#### ③ 배터리 잔량 - MQTT topic: 'drone/battery_status'
-
-필드명: battery_remaining, timestamp(미정)
-
-#### ④ mission_item(현재 가고 있는 목표지점을 알 수 있는지 확인하는 용도) - MQTT topic: 'drone/mission_status'
-
-필드명: mission_sequence, timestamp(미정)
 
 ---------------------------------------------------
 
