@@ -29,17 +29,14 @@ flask_client = mqtt.connect('mqtt://127.0.0.1:<b>1884</b>') 부분 추후 수정
 
 ---------------------------------------------------
 
+## (참고) [MQTT 브로커(mosquitto 서버) 구독 테스트 터미널 명령어]
+구독(subscribe): mosquitto_sub -h localhost -t /mytopic/1
+
+발행(publish): mosquitto_pub -h localhost -t /mytopic/1 -m "Hello MQTT test"
+
+---------------------------------------------------
+
 ## (참고) Mobius-Broker SW Architecture
 <div align="center">
 <img src="https://user-images.githubusercontent.com/29790334/28245393-a1159d5e-6a40-11e7-8948-4262bf29c371.png" width="500"/>
 </div>
-
----------------------------------------------------
-
-## [MQTT 브로커(mosquitto 서버) 구독 테스트 터미널 명령]
-mosquitto_sub -h localhost -t /mytopic/1
-
-## [MQTT 브로커(mosquitto 서버) 발행 테스트 터미널 명령]
-mosquitto_pub -h localhost -t /mytopic/1 -m "Hello MQTT test"
-
----------------------------------------------------
