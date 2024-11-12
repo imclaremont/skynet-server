@@ -21,8 +21,7 @@ CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 
 #### pxy_ws.js 내용과 동일 (CSE 비활성화)
 
 ### mqtt_message_handler() 함수
-
-flask_client = mqtt.connect('mqtt://127.0.0.1:<b>1884</b>') 부분 추후 수정 필요 ('mqtt://MQTT_BROKER_IP:<b>MQTT_PORT_NUMBER</b>')
+flask_client = mqtt.connect('mqtt://127.0.0.1:1884') 부분 추후 수정 필요 MQTT_BROKER_IP:MQTT_PORT_NUMBER
 
 ## OneDrone 연결
 포트번호: 1883 (MQTT 기본 비보안 포트)
