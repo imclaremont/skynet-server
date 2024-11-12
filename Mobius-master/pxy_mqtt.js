@@ -186,76 +186,142 @@ function reg_req_sub() {
 
 
 
-const flaskClient = mqtt.connect('mqtt://127.0.0.1:1884'); // Flask 서버 IP 및 포트 입력
-
-// Flask 서버로부터 오는 데이터 구독
-flaskClient.on('connect', () => {
-    console.log('Connected to Flask server');
-
-    flaskClient.subscribe('drone/commands', (err) => {
-        if (!err) {
-            console.log('Mobius subscribed to drone/commands');
-        } else {
-            console.error('Mobius has subscription error:', err);
-        }
-    });
-});
-
-flaskClient.on('error', (err) => {
-    console.error('Error connecting to Flask server:', err);
-});
-
-// Flask 서버로부터 오는 데이터 수신 및 처리 코드
-flaskClient.on('message', (topic, message) => {
-    try { // JSON 형식의 데이터를 처리
-        const parsedMessage = JSON.parse(message.toString());
-        console.log(`Flask 서버에서 받은 JSON 메시지, 토픽 ${topic}:`, parsedMessage);
-
-        if (topic === 'drone/commands') {
-            console.log('drone/commands 응답 처리:', parsedMessage);
-            // Flask로부터 온 JSON 데이터 처리 로직 추가
-
-
-
-        } else {
-            console.warn(`Flask 서버에서 받은 알 수 없는 JSON 토픽: ${topic}`);
-        }
-    } catch (error) { // JSON 형식이 아닌 데이터 처리 (예: MAVLink 바이너리 데이터)
-        console.warn('Flask 서버에서 받은 MAVLink 바이너리 데이터, 토픽:', topic);
-        
-        if (topic === 'drone/commands') {
-            console.log('drone/commands 응답 처리');
-            // Flask로부터 온 MAVLink 바이너리 데이터 처리 로직 추가
-
-
-
-        } else {
-            console.warn(`Flask 서버에서 받은 알 수 없는 MAVLink 바이너리 데이터, 토픽: ${topic}`);
-        }
-    }
-});
-
 function mqtt_message_handler(topic, message) {
     const topic_arr = topic.split('/');
 
-    // OneDrone에서 Mobius로 전송되는 MAVLink 바이너리 메시지 처리
+    // Flask 서버와 연결 및 구독 설정
+    const flask_client = mqtt.connect('mqtt://127.0.0.1:1884'); // Flask 서버 IP 및 포트 입력
+
+    
+    /* 1. OneDrone -> Mobius -> Flask */
+    // Flask 서버에서 오는 데이터 구독
+    flask_client.on('connect', () => {
+        console.log('Connected to Flask server');
+        flask_client.subscribe('drone/commands', (err) => {
+            if (!err) {
+                console.log('Mobius subscribed to drone/commands');
+            } else {
+                console.error('Mobius has subscription error:', err);
+            }
+        });
+    });
+
+    flask_client.on('error', (err) => {
+        console.error('Error connecting to Flask server:', err);
+    });
+
+    // Flask 서버에서 오는 데이터 수신 및 처리 코드
+    flask_client.on('message', (topic, message) => {
+        try { // JSON 형식의 데이터를 처리(미션 명령)
+            const parsedMessage = JSON.parse(message.toString());
+            console.log(`Flask 서버에서 받은 JSON 메시지, 토픽 ${topic}:`, parsedMessage);
+
+            if (topic === 'drone/commands') {
+                console.log('drone/commands 응답 처리:', parsedMessage);
+                // Flask로부터 온 JSON 데이터 처리 로직 추가
+
+
+
+            } else {
+                console.warn(`Flask 서버에서 받은 알 수 없는 JSON 토픽: ${topic}`);
+            }
+        } catch (error) { // JSON 형식이 아닌 MAVLink 바이너리 데이터 처리(ARM, SET_MODE)
+            console.warn('Flask 서버에서 받은 MAVLink 바이너리 데이터, 토픽:', topic);
+
+            if (topic === 'drone/commands') {
+                console.log('drone/commands 응답 처리');
+                // Flask로부터 온 MAVLink 바이너리 데이터 처리 로직 추가
+
+
+
+            } else {
+                console.warn(`Flask 서버에서 받은 알 수 없는 MAVLink 바이너리 데이터, 토픽: ${topic}`);
+            }
+        }
+    });
+
+
+    /* 2. Flask -> Mobius -> OneDrone */
+    // OneDrone에서 Mobius로 전송되는 MAVLink 메시지 처리
     if (topic === '/Mobius/[GCS이름]/Drone_Data/[드론이름]/[sortie이름]/orig') {
         try {
             // MAVLink 메시지 파싱
-            const mavParser = new mavlink(1, 1);
-            mavParser.parseBuffer(message);
+            const mavParser = new mavlink(1, 1); // MAVLink 객체 생성
+            mavParser.parseBuffer(message); // 바이너리 메시지 파싱
 
             mavParser.on('message', (mavMessage) => {
                 console.log('Received MAVLink message from OneDrone:', mavMessage);
 
-                // JSON으로 변환된 메시지를 Flask 서버에 전송
-                flaskClient.publish('drone/status', JSON.stringify(mavMessage));
-                console.log('Sent MAVLink data as JSON to Flask server on topic drone/status');
+                // JS 객체를 JSON으로 변환하여 Flask 서버에 전송
+                const mavMessageJson = JSON.stringify(mavMessage);
+                flask_client.publish('drone/status', mavMessageJson, (err) => {
+                    if (!err) {
+                        console.log('Sent MAVLink data as JSON to Flask server on topic drone/status');
+                    } else {
+                        console.error('Failed to send MAVLink data to Flask:', err);
+                    }
+                });
             });
         } catch (error) {
             console.error('Error processing MAVLink message from OneDrone:', error);
         }
     }
+
+
+    // Mobius -> Flask 로 더미 데이터 생성 (JSON 형식으로 전송)
+    // 주기적으로 더미 데이터를 전송 (3초마다)
+    setInterval(() => {
+        const heartbeatMessage = { // 1. HEARTBEAT 메시지
+            type: "HEARTBEAT",
+            data: {
+                drone_id: 1,
+                isArmed: true,
+                isGuided: true
+            }
+        };
+
+        const globalPositionMessage = { // 2. GLOBAL_POSITION_INT 메시지
+            type: "GLOBAL_POSITION_INT",
+            data: {
+                latitude: 37.7749 * 1e7,      // 위도 (MAVLink 형식)
+                longitude: -122.4194 * 1e7,   // 경도 (MAVLink 형식)
+                altitude: 100,                // 고도
+                vx: 5,                        // 속도 x 방향
+                vy: 0,                        // 속도 y 방향
+                vz: -2                        // 속도 z 방향
+            }
+        };
+
+        const batteryStatusMessage = { // 3. BATTERY_STATUS 메시지
+            type: "BATTERY_STATUS",
+            data: {
+                battery_status: 90 // 배터리 잔량
+            }
+        };
+
+        const missionCurrentMessage = { // 4. MISSION_CURRENT 메시지
+            type: "MISSION_CURRENT",
+            data: {
+                mission_status: 1 // 현재 미션 단계
+            }
+        };
+
+        // 각 더미 메시지를 JSON 형식으로 변환한 후 Flask 서버로 전송
+        const mavMessages = [heartbeatMessage, globalPositionMessage, batteryStatusMessage, missionCurrentMessage];
+        mavMessages.forEach(mavMessage => {
+            const mavMessageJson = JSON.stringify(mavMessage);
+
+            flask_client.publish('drone/status', mavMessageJson, (err) => {
+                if (!err) {
+                    console.log('Sent MAVLink data as JSON to Flask server on topic drone/status');
+                } else {
+                    console.error('Failed to send MAVLink data to Flask:', err);
+                }
+            });
+        });
+
+    }, 3000);
+
 
     // 기존 메시지 처리 로직
     if(topic_arr[5] != null) {
