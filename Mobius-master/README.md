@@ -24,9 +24,9 @@ CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 
 
 flask_client = mqtt.connect('mqtt://127.0.0.1:1884') 부분 추후 수정 필요 MQTT_BROKER_IP:MQTT_PORT_NUMBER
 
-1. OneDrone -> Mobius -> Flask
+OneDrone -> Mobius -> Flask
 
-2. Flask -> Mobius -> OneDrone
+Flask -> Mobius -> OneDrone
 
 ## OneDrone 연결
 포트번호: 1883 (MQTT 기본 비보안 포트)
