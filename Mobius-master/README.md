@@ -24,6 +24,16 @@ CSE를 사용하지 않으므로 해당 부분 코드 주석으로 비활성화 
 
 flask_client = mqtt.connect('mqtt://127.0.0.1:<b>1884</b>') 부분 추후 수정 필요 ('mqtt://MQTT_BROKER_IP:<b>MQTT_PORT_NUMBER</b>')
 
+## OneDrone 연결
+포트번호: 1883 (MQTT 기본 비보안 포트)
+
+---------------------------------------------------
+
+## (참고) Mobius-Broker SW Architecture
+<div align="center">
+<img src="https://user-images.githubusercontent.com/29790334/28245393-a1159d5e-6a40-11e7-8948-4262bf29c371.png" width="500"/>
+</div>
+
 ---------------------------------------------------
 
 ## [MQTT 브로커(mosquitto 서버) 구독 테스트 터미널 명령]
@@ -33,14 +43,3 @@ mosquitto_sub -h localhost -t /mytopic/1
 mosquitto_pub -h localhost -t /mytopic/1 -m "Hello MQTT test"
 
 ---------------------------------------------------
-
-## OneDrone 연결
-포트번호: 1883
-
----------------------------------------------------
-
-
-## (참고) Mobius-Broker SW Architecture
-<div align="center">
-<img src="https://user-images.githubusercontent.com/29790334/28245393-a1159d5e-6a40-11e7-8948-4262bf29c371.png" width="500"/>
-</div>
