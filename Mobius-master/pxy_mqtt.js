@@ -315,7 +315,7 @@ function mqtt_message_handler(topic, message) {
             } else {
                 console.warn(`Flask 서버에서 받은 알 수 없는 JSON 데이터, 토픽: ${topic}`);
             }
-        } catch (error) {
+        } catch (error) { // 그 이외 타입의 데이터를 처리(ARM, SET_MODE: MAVLink 바이너리 메시지 타입)
             console.warn('Flask 서버에서 받은 MAVLink 바이너리 데이터, 토픽:', topic);
 
             if (topic === 'drone/commands') {
