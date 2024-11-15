@@ -257,56 +257,56 @@ flask_client.on('message', (topic, message) => {
 // 아래는 더미 데이터 테스트 코드입니다
 // Mobius -> Flask 로 더미 데이터를 생성 (더미 데이터는 객체 타입이며 JSON 타입으로 파싱 후 발행)
 // 주기적으로 더미 데이터를 전송 (3초마다)
-setInterval(() => {
-    const heartbeatMessage = { // 1. HEARTBEAT 메시지
-        type: "HEARTBEAT",
-        data: {
-            drone_id: 1,
-            isArmed: true,
-            isGuided: true
-        }
-    };
+// setInterval(() => {
+//     const heartbeatMessage = { // 1. HEARTBEAT 메시지
+//         type: "HEARTBEAT",
+//         data: {
+//             drone_id: 1,
+//             isArmed: true,
+//             isGuided: true
+//         }
+//     };
 
-    const globalPositionMessage = { // 2. GLOBAL_POSITION_INT 메시지
-        type: "GLOBAL_POSITION_INT",
-        data: {
-            latitude: 37.7749 * 1e7,      // 위도 (MAVLink 형식)
-            longitude: -122.4194 * 1e7,   // 경도 (MAVLink 형식)
-            altitude: 100,                // 고도
-            vx: 5,                        // 속도 x 방향
-            vy: 0,                        // 속도 y 방향
-            vz: -2                        // 속도 z 방향
-        }
-    };
+//     const globalPositionMessage = { // 2. GLOBAL_POSITION_INT 메시지
+//         type: "GLOBAL_POSITION_INT",
+//         data: {
+//             latitude: 37.7749 * 1e7,      // 위도 (MAVLink 형식)
+//             longitude: -122.4194 * 1e7,   // 경도 (MAVLink 형식)
+//             altitude: 100,                // 고도
+//             vx: 5,                        // 속도 x 방향
+//             vy: 0,                        // 속도 y 방향
+//             vz: -2                        // 속도 z 방향
+//         }
+//     };
 
-    const batteryStatusMessage = { // 3. BATTERY_STATUS 메시지
-        type: "BATTERY_STATUS",
-        data: {
-            battery_status: 90 // 배터리 잔량
-        }
-    };
+//     const batteryStatusMessage = { // 3. BATTERY_STATUS 메시지
+//         type: "BATTERY_STATUS",
+//         data: {
+//             battery_status: 90 // 배터리 잔량
+//         }
+//     };
 
-    const missionCurrentMessage = { // 4. MISSION_CURRENT 메시지
-        type: "MISSION_CURRENT",
-        data: {
-            mission_status: 1 // 현재 미션 단계
-        }
-    };
+//     const missionCurrentMessage = { // 4. MISSION_CURRENT 메시지
+//         type: "MISSION_CURRENT",
+//         data: {
+//             mission_status: 1 // 현재 미션 단계
+//         }
+//     };
 
-    // 각 더미 메시지를 JSON 형식으로 파싱한 후 Flask 서버로 발행
-    const mavMessages = [heartbeatMessage, globalPositionMessage, batteryStatusMessage, missionCurrentMessage];
-    mavMessages.forEach(mavMessage => {
-        const mavMessageJson = JSON.stringify(mavMessage);
+//     // 각 더미 메시지를 JSON 형식으로 파싱한 후 Flask 서버로 발행
+//     const mavMessages = [heartbeatMessage, globalPositionMessage, batteryStatusMessage, missionCurrentMessage];
+//     mavMessages.forEach(mavMessage => {
+//         const mavMessageJson = JSON.stringify(mavMessage);
 
-        flask_client.publish('drone/status', mavMessageJson, (err) => {
-            if (!err) {
-                console.log('Sent MAVLink data as JSON to Flask server on topic drone/status');
-            } else {
-                console.error('Failed to send MAVLink data to Flask:', err);
-            }
-        });
-    });
-}, 3000);
+//         flask_client.publish('drone/status', mavMessageJson, (err) => {
+//             if (!err) {
+//                 console.log('Sent MAVLink data as JSON to Flask server on topic drone/status');
+//             } else {
+//                 console.error('Failed to send MAVLink data to Flask:', err);
+//             }
+//         });
+//     });
+// }, 3000);
 
 
 // OneM2M 관련 메시지 처리 함수 (OneM2M 시스템 내에서 발생하는 모든 다양한 메시지에 대해 호출)
