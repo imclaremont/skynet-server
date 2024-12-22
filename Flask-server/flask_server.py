@@ -1,12 +1,16 @@
 # flask_server.py
 
 #import mysql.connector
-from flask import Flask,render_template, jsonify, request
-from drone import get_drone_status
+from json import JSONDecoder
+from flask import Flask,render_template, jsonify, request, redirect, url_for
+from drone import get_drone_status, get_mission_drones
 import threading
 import mqtt_client, weather_api
 from dotenv import load_dotenv
 import os
+from path_planning import *
+from delivery import Delivery
+from ml_model import load_model
 
 load_dotenv()
 
@@ -14,6 +18,8 @@ db_user = os.getenv('DB_USER')
 db_password = os.getenv('DB_PASSWORD')
 
 app = Flask(__name__)
+time_prediction_model = load_model("./delivery_time_prediction_model.pkl")
+
 
 # 종료 이벤트
 shutdown_event = threading.Event()
@@ -22,86 +28,120 @@ shutdown_event = threading.Event()
 def index():
     return render_template('index.html')
 
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
+
+@app.route('/delivery_info')
+def delivery_info():
+    return render_template('delivery_info.html')
+
+# 임시 현재 배송 정보를 반환하는 엔드포인트
+@app.route('/api/delivery_info', methods=['GET'])
+def api_delivery_info():
+    delivery_id = str(request.args.get("delivery_id"))
+    
+    searched_delivery = None
+    for delivery in waiting_delivery:
+        if delivery.delivery_id == delivery_id:
+            searched_delivery = delivery
+            break
+    if(searched_delivery is None):
+        for drone in mission_drones:
+            if(drone.delivery is None):
+                continue
+            if(drone.delivery.delivery_id == delivery_id):
+                searched_delivery = drone.delivery
+                break
+        
+    
+    if(searched_delivery is None):
+        return None
+    
+    delivery_info = {
+        "delivery_id": searched_delivery.delivery_id,
+        "content": searched_delivery.content,
+        "edge_origin_name": searched_delivery.drone.edge.origin.name if searched_delivery.drone is not None else searched_delivery.origin,
+        "edge_destination_name": searched_delivery.drone.edge.destination.name if searched_delivery.drone is not None else searched_delivery.origin,
+        "destination": searched_delivery.destination,
+        "edt": searched_delivery.drone.get_edt(time_prediction_model) if searched_delivery.drone is not None else "INF"
+    }
+    
+    return jsonify(delivery_info)
+
+
+# 임시 현재 운행 중인 드론 상태를 반환하는 엔드포인트
+@app.route('/api/mission_drones', methods=['GET'])
+def get_drones():
+    # mission_drones = get_mission_drones()  # 드론 상태를 가져옴
+
+    # 드론 객체를 JSON 직렬화 가능한 형태로 변환
+    # mission_drones_data = [drone.to_dict() for drone in mission_drones]
+    # print(f"\n{mission_drones_data}\n")
+    # return jsonify(mission_drones_data)
+    drones = mission_drones[:]
+    rslt = []
+    for drone in drones :
+        rslt.append({
+        "id": drone.id,
+        "battery_status": round(float(drone.battery_status), 2),
+        "altitude": drone.altitude,
+        # "waypoints": drone.destinations,
+        "edge_origin_name": drone.edge.origin.name if drone.edge is not None else None,
+        "edge_destination_name": drone.edge.destination.name if drone.edge is not None else None,
+        "delivery_content": drone.delivery.content if drone.delivery is not None else None,
+        "delivery_destination": drone.destinations[-1].name if len(drone.destinations) > 0 else None,
+        "edt": drone.get_edt(time_prediction_model),
+        "vx": drone.vx,
+        "vy": drone.vy,
+        "vz": drone.vz
+        })
+        
+    return jsonify(rslt)
+    
+
 
 @app.route('/pathfinding', methods=['POST'])
 def pathfinding():
+    
+    cname = request.form['cname']# 배송품 이름
     sname = request.form['sname']
     dname = request.form['dname']
 
-    # 경로 계산 로직
-    route = f"출발지 : {sname}, 목적지 : {dname}의 경로 계산 완료!"
-    print(route)
-
+    new_delivery = Delivery(cname, sname, dname)
+    waiting_delivery.append(new_delivery)
+    # 경로 계산 로직 
+    #routes.append(search_route(get_station_by_name(sname), get_station_by_name(dname)))
+    # print(f"출발지 : {sname}, 목적지 : {dname}의 경로 계산 완료!")
 
     # 경로 전달
 
 
-    return request.json
+    return redirect(url_for('delivery_info', delivery_id=f"{new_delivery.delivery_id}"))
 
 
-@app.route('/send_control_command', methods=['GET'])
-def send_control_command():
-    # 요청으로부터 제어 명령 데이터를 가져옴
-    command_data = request.json
-
-    # MQTT 클라이언트에 제어 명령 데이터 전송
-    mqtt_client.publish_control_command(command_data)
-    print(f"Control command sent to MQTT: {command_data}")
-
-    return jsonify({"status": "Command sent", "command": command_data})
-
-
-# 임시 현재 드론 상태를 반환하는 엔드포인트
-@app.route('/drones', methods=['GET'])
-def get_drones():
-    drones = get_drone_status()  # 드론 상태를 가져옴
-
-    print(f"\n{drones}\n")
-    return jsonify(drones)
-
-
-# 테스트용 엔드포인트
-@app.route('/test_publish', methods=['GET'])
-def test_publish():
-    print("test_publish called!")
-    test_command = {
-
-        # "command": "SET_MODE",
-        # "mode": "GUIDED",
-        # "sys_id": 1,
-
-        # "command": "ARM",
-        # "sys_id": 1,
-        # "comp_id": 1
-
-        # "command": "TAKEOFF",
-        # "sys_id": 1,
-        # "comp_id": 1,
-        # "altitude": 30
-
-        # "command": "MOVE_TO",
-        # "latitude": 35.360489,
-        # "longitude": 149.169093,
-        # "altitude": 30
-
-        "command": "LAND",
-        "sys_id": 1,
-        "comp_id": 1
-    }
-    mqtt_client.publish_control_command(test_command)
-    return jsonify({"status": "Test command sent", "command": test_command})
+@app.route('/stations/flyable', methods=['GET'])
+def get_all_stations_flyable():
+    stations_status = [{
+        'station_name': station.name,
+        'is_flyable': station.is_flyable
+    } for station in stations]
+    
+    return jsonify(stations_status)
 
 
 #Flask 서버를 실행
 def run_flask():
-    app.run(host='127.0.0.1', port=5000)
+    app.run(host='0.0.0.0', port=5000)
+    
     
 
 if __name__ == '__main__':
     # MQTT 클라이언트를 별도의 스레드에서 실행
     mqtt_thread = threading.Thread(target=mqtt_client.start_mqtt_client)
     mqtt_thread.start()
-
+    # 경로 탐색 모듈 초기화
+    initialize_path_planning_module()
     # Flask 서버 실행
     try:
         run_flask()

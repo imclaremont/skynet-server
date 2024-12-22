@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>사용자 대시보드</title>
+    <link rel="stylesheet" href="../static/delivery_info.css" />
+    <script defer src="../static/delivery_info.js"></script>
+    <style>
+      /* 기본 스타일 */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f5f7fa;
+        color: #333;
+        overflow-x: hidden; /* 좌우 스크롤 방지 */
+      }
+
+      header {
+        background: linear-gradient(45deg, #007bff, #00c6ff);
+        color: white;
+        padding: 1rem;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+      }
+
+      .dashboard-title {
+        margin: 0;
+        font-size: 1.5rem; /* 폰트 크기 줄임 */
+        font-weight: bold;
+      }
+
+      .dashboard-container {
+        max-width: 900px;
+        margin: 5rem auto 0; /* 헤더 공간 확보 */
+        padding: 2rem 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem; /* 간격 줄임 */
+      }
+
+      .delivery-id-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+        text-align: center;
+        font-size: 1rem;
+        color: #007bff;
+        font-weight: bold;
+      }
+
+      .card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 1rem; /* 패딩 줄임 */
+        text-align: center;
+      }
+
+      .card h2 {
+        font-size: 1.2rem; /* 폰트 크기 줄임 */
+        margin-bottom: 0.5rem;
+        color: #555;
+      }
+
+      .card p {
+        font-size: 1rem; /* 폰트 크기 줄임 */
+        color: #777;
+        margin-top: 1rem; /* 간격 추가 */
+      }
+
+      .grid-item {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 1rem; /* 패딩 줄임 */
+        text-align: center;
+      }
+
+      .grid-item h3 {
+        font-size: 1.2rem; /* 폰트 크기 줄임 */
+        color: #555;
+        margin-bottom: 1rem; /* 간격 추가 */
+      }
+
+      .grid-item p {
+        font-size: 1rem; /* 폰트 크기 줄임 */
+        color: #777;
+        margin-top: 1rem; /* 간격 추가 */
+      }
+
+      footer {
+        background-color: #007bff;
+        color: white;
+        text-align: center;
+        padding: 1rem;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+      }
+
+      .back-link {
+        text-decoration: none;
+        background-color: gray; /* 배경색을 회색으로 변경 */
+        color: white; /* 글자 색상 유지 */
+        font-weight: bold;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1 class="dashboard-title">사용자 대시보드</h1>
+    </header>
+
+    <div class="dashboard-container">
+      <div class="delivery-id-card">운송 번호: 00000000</div>
+
+      <div class="card">
+        <h2>현재 경로</h2>
+        <p>출발지: 로딩 중...</p>
+        <p>다음 목적지: 로딩 중...</p>
+      </div>
+
+      <div class="grid-item">
+        <h3>배송 물품</h3>
+        <p>로딩 중...</p>
+      </div>
+
+      <div class="grid-item">
+        <h3>최종 목적지</h3>
+        <p>로딩 중...</p>
+      </div>
+
+      <div class="grid-item">
+        <h3>예상 배송 시간</h3>
+        <p>0분</p>
+      </div>
+    </div>
+
+    <footer>
+      <a href="/" class="back-link">홈으로 돌아가기</a>
+    </footer>
+  </body>
+</html>

@@ -1,19 +1,242 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>경로 탐색</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        flex-direction: column;
+      }
+      form {
+        background-color: white;
+        padding: 20px 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 80%;
+        max-width: 400px;
+      }
+      form label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 8px;
+      }
+      form input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+      form button {
+        width: 100%;
+        background-color: #007bff;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      form button:hover {
+        background-color: #0056b3;
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      /* 자동완성 스타일 */
+      input::-webkit-calendar-picker-indicator {
+        display: none;
+      }
+      input[list] {
+        border: none;
+        border-bottom: 1px solid #ccc;
+        border-radius: 0;
+        padding: 10px;
+        font-size: 16px;
+        background-color: transparent;
+        position: relative; /* datalist 위치 설정을 위해 relative 추가 */
+      }
+      input[list]:focus {
+        outline: none;
+      }
+      datalist {
+        position: absolute; /* 절대 위치 설정 */
+        top: 100%; /* input 요소 바로 아래에 위치 */
+        left: 0;
+        width: 100%; /* input 요소와 동일한 너비 */
+        max-height: 300px; /* 높이 증가 */
+        overflow-y: auto;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: white;
+        z-index: 10;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: none;
+      }
+      datalist option {
+        padding: 8px 10px;
+        cursor: pointer;
+      }
+      datalist option:hover {
+        background-color: #f0f0f0;
+      }
+      input[list]:focus + datalist,
+      datalist:hover {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
     <form action="/pathfinding" method="post">
-        <label for="sname">출발지 : </label>
-        <input type="text" id="sname" name="sname" required>
-        <br>
-        <label for="sname">목적지 : </label>
-        <input type="text" id="dname" name="dname" required>
-        <br>
-        <button type="submit">제출</button>
+      <h1>배송 신청</h1>
+      <label for="item">배송 물품 이름</label>
+      <input
+        type="text"
+        id="item"
+        name="cname"
+        placeholder="배송 물품 이름을 입력하세요"
+        required
+      />
+
+      <label for="sname">출발지</label>
+      <input
+        type="text"
+        id="sname"
+        name="sname"
+        list="stationList"
+        placeholder="출발지 입력 또는 선택"
+        required
+      />
+
+      <label for="dname">목적지</label>
+      <input
+        type="text"
+        id="dname"
+        name="dname"
+        list="stationList"
+        placeholder="목적지 입력 또는 선택"
+        required
+      />
+
+      <datalist id="stationList"> </datalist>
+
+      <button type="submit">제출</button>
     </form>
-</body>
+    <form action="/delivery_info" method="get">
+      <h1>배송 조회</h1>
+      <label for="trackingNumber">운송장 번호</label>
+      <input
+        type="text"
+        id="delivery_id"
+        name="delivery_id"
+        placeholder="운송장 번호를 입력하세요"
+        required
+      />
+      <button type="submit">조회</button>
+    </form>
+
+    <script>
+      const stations = [
+        "가락시장",
+        "강남",
+        "강남구청",
+        "강변(동서울터미널)",
+        "개롱",
+        "개포동",
+        "거여",
+        "건대입구",
+        "경찰병원",
+        "광나루(장신대)",
+        "구룡",
+        "구의(광진구청)",
+        "군자(능동)",
+        "금호",
+        "논현",
+        "답십리",
+        "대모산입구",
+        "대청",
+        "대치",
+        "도곡",
+        "뚝섬",
+        "뚝섬유원지",
+        "마장",
+        "마천",
+        "매봉",
+        "몽촌토성(평화의문)",
+        "문정",
+        "방이",
+        "복정",
+        "봉은사",
+        "삼성",
+        "삼성(무역센터)",
+        "삼성중앙",
+        "삼전",
+        "상왕십리",
+        "서울숲",
+        "석촌",
+        "석촌고분",
+        "선릉",
+        "선정릉",
+        "성수",
+        "송파",
+        "송파나루",
+        "수서",
+        "신금호",
+        "신논현",
+        "신답",
+        "신사",
+        "아차산(어린이대공원후문)",
+        "압구정",
+        "압구정로데오",
+        "어린이대공원(세종대)",
+        "언주",
+        "역삼",
+        "오금",
+        "옥수",
+        "올림픽공원(한국체대)",
+        "왕십리(성동구청)",
+        "용답",
+        "응봉",
+        "일원",
+        "잠실(송파구청)",
+        "잠실나루",
+        "잠실새내",
+        "장지",
+        "장한평",
+        "종합운동장",
+        "중곡",
+        "천호(풍납토성)",
+        "청담",
+        "학동",
+        "학여울",
+        "한성백제",
+        "한양대",
+        "한티",
+        "행당",
+      ];
+
+      // Datalist 요소에 옵션 추가
+      const stationList = document.getElementById("stationList");
+
+      stations.forEach((station) => {
+        const option = document.createElement("option");
+        option.value = station;
+        stationList.appendChild(option);
+      });
+    </script>
+  </body>
 </html>
