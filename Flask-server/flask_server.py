@@ -132,7 +132,7 @@ def get_all_stations_flyable():
 
 #Flask 서버를 실행
 def run_flask():
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5001)
     
     
 
