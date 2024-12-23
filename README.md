@@ -1,4 +1,4 @@
-# 참고사항
+## (참고)
 path_planning.py 파일의 password="your_password" 부분 수정
 
 # 포스터
