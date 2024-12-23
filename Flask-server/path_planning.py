@@ -50,8 +50,8 @@ limitDistance = 2.0
 def get_stations_from_db() :
     conn = mysql.connector.connect(
         host="localhost",
-        user=db_user,
-        password=db_password,
+        user="root",
+        password="your_password",
         database="drone" 
     )
     try:
